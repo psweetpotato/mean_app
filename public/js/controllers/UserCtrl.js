@@ -1,9 +1,10 @@
 angular.module("UserCtrl", [])
- .controller("UserController", ['$scope', function($scope) {
-    $scope.myForm = {};
-    console.log($scope.myForm);
-    $scope.myForm.submitTheForm = function(){
-      console.log($scope.myForm);
-      User.create($scope.myForm);
+ .controller("UserController", [function($scope) {
+    this.myForm = {};
+    console.log(this.myForm);
+    this.myForm.submitTheForm = function(){
+      console.log(this.myForm);
+      //code to add to database
     };
   }]);
+

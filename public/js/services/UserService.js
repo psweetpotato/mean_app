@@ -12,7 +12,7 @@ angular.module('app', []).factory('User', ['$http', function($http) {
             return $http.post('/api/users', userData);
         },
 
-        // call to DELETE a nerd
+        // call to DELETE a user
         delete : function(id) {
             return $http.delete('/api/users/' + id);
         }
