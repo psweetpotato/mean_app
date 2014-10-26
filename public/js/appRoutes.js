@@ -9,8 +9,8 @@
             controller: 'MainController'
         })
 
-        // nerds page that will use the NerdController
-        .when('/users', {
+        // users page that will use the NerdController
+        .when('/newuser', {
             templateUrl: 'views/user.html',
             controller: 'UserController'
         });

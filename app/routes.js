@@ -1,7 +1,7 @@
 // grab the user model we just created
 
-var User = require('./models/user').User;
-var Best = require('./models/user').Best;
+var User = require('./models/models').User;
+var Best = require('./models/models').Best;
 
 
     module.exports = function(app) {
@@ -57,7 +57,7 @@ var Best = require('./models/user').Best;
              });
          });
          app.post('/api/bests', function(req, res){
-             var best = new User();
+             var best = new Best();
              best.name = req.name;
              best.lat = req.lat;
              best.lon = req.lon;
@@ -70,7 +70,7 @@ var Best = require('./models/user').Best;
              });
          });
          app.delete('/api/bests', function(req, res){
-             User.delete(function(err){
+             Best.delete(function(err){
                  // add delete code
              });
          });
@@ -85,5 +85,8 @@ var Best = require('./models/user').Best;
         });
         app.get('/newuser', function(req, res) {
             res.sendfile('./public/views/user.html'); // load our public/user.html file
+        });
+        app.get('/newbest', function(req, res) {
+            res.sendfile('./public/views/best.html'); // load our public/user.html file
         });
 };
