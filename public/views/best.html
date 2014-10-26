@@ -1,0 +1,24 @@
+<!-- public/views/best.html -->
+<body ng-app="app">
+<div ng-controller="BestController" >
+    <form>
+        <input type="text" name="name" ng-model="myForm.name"> Name <br/>
+        <input type="text" name="lat"  ng-model="myForm.lat"> Latitude <br/>
+        <input type="text" name="lon"  ng-model="myForm.lon"> Longitude <br/>
+        <input type="text" name="address"  ng-model="myForm.address"> Address <br/>
+        <!-- <input type="hidden" name="user"  ng-model="myForm.user"><br/> --><!--  should pull user from params -->
+    </form>
+ <button ng-click="myForm.submitTheForm()">Submit Form</button>
+</div>
+<script>
+  angular.module("app", [])
+    .controller("BestController", function($scope) {
+      $scope.myForm = {};
+      $scope.myForm.name = "Jakob";
+      $scope.myForm.lat  = "41.099";
+      $scope.myForm.lon  = "-71.009";
+      $scope.myForm.address  = "address";
+      $scope.myForm.user  = "id";
+    });
+</script>
+</body>

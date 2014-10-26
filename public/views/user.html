@@ -1,0 +1,18 @@
+<!-- public/views/user.html -->
+<body ng-app="app">
+<div ng-controller="UserController" >
+    <form>
+        <input type="text" name="name" ng-model="myForm.name"> First name <br/>
+        <input type="text" name="email"  ng-model="myForm.email"> Email <br/>
+    </form>
+ <button ng-click="myForm.submitTheForm()">Submit Form</button>
+</div>
+<script>
+    angular.module("app", [])
+            .controller("UserController", function($scope) {
+                $scope.myForm = {};
+                $scope.myForm.name = "Jakob";
+                $scope.myForm.email  = "test@test.com";
+            } );
+</script>
+</body>
