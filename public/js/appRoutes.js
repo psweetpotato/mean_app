@@ -3,13 +3,7 @@
 
     $routeProvider
 
-        // home page
-        .when('/', {
-            templateUrl: 'views/home.html',
-            controller: 'MainController'
-        })
-
-        // users page that will use the NerdController
+        // users page that will use the UserController
         .when('/newuser', {
             templateUrl: 'views/user.html',
             controller: 'UserController'

@@ -28,12 +28,11 @@ var Best = require('./models/models').Best;
         });
         // route to handle creating
         app.post('/api/users', function(req, res){
+            console.log('routes post');
             var user = new User();
             user.id = req.id;
-            console.log(user.id)
             user.name = req.name;
             user.email = req.email;
-            user.bests = req.bests;
             user.save(function(err) {
                 if (err)
                 res.send(err);

@@ -1,6 +1,9 @@
-// public/js/controllers/UserCtrl.js
-angular.module('UserCtrl', []).controller('UserController', function($scope) {
-
-    $scope.tagline = 'Nothing beats a pocket protector!';
-
-});
+angular.module("UserCtrl", [])
+ .controller("UserController", ['$scope', function($scope) {
+    $scope.myForm = {};
+    console.log($scope.myForm);
+    $scope.myForm.submitTheForm = function(){
+      console.log($scope.myForm);
+      User.create($scope.myForm);
+    };
+  }]);
