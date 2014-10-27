@@ -1,2 +1,2 @@
 // public/js/app.js
-var appModule = angular.module('app', ['ngRoute', 'appRoutes', 'MainCtrl', 'UserCtrl', 'UserService'])
+var appModule = angular.module('app', ['ngRoute', 'appRoutes', 'UserCtrl', 'UserService'])
