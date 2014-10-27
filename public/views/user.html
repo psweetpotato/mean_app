@@ -9,9 +9,9 @@
     <script src="js/app.js"></script>
 
 <div>
-    <form ng-controller="UserController as user" ng-submit="user.myForm.submitTheForm(newUser)">
-        <input type="text" name="name" ng-model="user.newUser.name"> First name <br/>
-        <input type="text" name="email"  ng-model="user.newUser.email"> Email <br/><input type="submit" id="submit" value="Submit" />
+    <form name="myForm" ng-controller="UserController as user" ng-submit="user.myForm.submitTheForm(myForm)">
+        <input type="text" name="name" ng-model="user.myForm.name"> First name <br/>
+        <input type="text" name="email"  ng-model="user.myForm.email"> Email <br/><input type="submit" id="submit" value="Submit" />
     </form>
 
 </div>

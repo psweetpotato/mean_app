@@ -1,11 +1,12 @@
-
 angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 'User',
   function($scope, $http, User) {
     this.myForm = {};
+    this.myForm.name;
+    this.myForm.email;
     console.log(this.myForm);
 
     this.myForm.submitTheForm = function($http, userData){
-      console.log(this.myForm);
+      console.log(userData);
       var userData = this.myForm;
       $http.post('/api/users', userData)
     };
