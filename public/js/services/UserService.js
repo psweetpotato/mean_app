@@ -8,7 +8,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
 
         create : function(userData) {
           console.log("factory create");
-            return $http.post('/api/users', userData);
+          $http.post('/api/users', userData);
         },
 
         // call to DELETE a user
