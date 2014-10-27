@@ -2,9 +2,10 @@ angular.module('BestCtrl', []).controller('BestController', ['$scope', '$http', 
   function($scope, $http, Best) {
     this.myBestForm = {};
     console.log(this.myBestForm);
-    this.myBestForm.submitTheBestForm = function($http, bestData)
+    this.myBestForm.submitTheBestForm = function($http, bestData) {
       console.log($scope.best.myBestForm);
       var bestData = $scope.best.myBestForm;
       console.log(bestData);
       Best.create(bestData);
-});
+    };
+}]);

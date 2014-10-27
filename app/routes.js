@@ -87,7 +87,7 @@ var Best = require('./models/models').Best;
             res.sendfile('./public/views/user.html'); // load our public/user.html file
         });
         app.get('/newbest', function(req, res) {
-            res.sendfile('./public/views/best.html'); // load our public/user.html file
+            res.sendfile('./public/views/best.html'); // load our public/best.html file
         });
 
 
