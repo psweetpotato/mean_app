@@ -2,16 +2,15 @@
 <body ng-app="app">
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+
+    <script src="js/app.js"></script>
     <script src="js/services/UserService.js"></script>
     <script src="js/controllers/UserCtrl.js"></script>
-    <script>
-        angular.module('app', ['ngRoute', 'UserCtrl']);
-    </script>
 
 <div>
-    <form ng-controller="UserController as user" ng-submit="user.myForm.submitTheForm()">
-        <input type="text" name="name" ng-model="user.myForm.name"> First name <br/>
-        <input type="text" name="email"  ng-model="user.myForm.email"> Email <br/><input type="submit" id="submit" value="Submit" />
+    <form ng-controller="UserController as user" ng-submit="user.myForm.submitTheForm(newUser)">
+        <input type="text" name="name" ng-model="user.newUser.name"> First name <br/>
+        <input type="text" name="email"  ng-model="user.newUser.email"> Email <br/><input type="submit" id="submit" value="Submit" />
     </form>
 
 </div>

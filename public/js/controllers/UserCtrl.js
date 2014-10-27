@@ -1,10 +1,14 @@
-angular.module("UserCtrl", [])
- .controller("UserController", [function($scope) {
+angular.module('app')
+ .controller("UserController", ['$scope', '$http', 'UserFactory',
+  function($scope, $http, UserFactory) {
     this.myForm = {};
     console.log(this.myForm);
-    this.myForm.submitTheForm = function(){
+
+    this.myForm.submitTheForm = function($http, userData){
       console.log(this.myForm);
-      //code to add to database
+      var userData = this.myForm;
+      $http.post('/api/users', userData)
     };
+
   }]);
 

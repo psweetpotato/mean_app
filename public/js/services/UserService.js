@@ -1,5 +1,4 @@
-// public/js/services/UserService.js
-angular.module('app', []).factory('User', ['$http', function($http) {
+angular.module('app').factory('UserFactory', ['$http', function($http) {
 
     return {
         // call to get all users
