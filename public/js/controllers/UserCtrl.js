@@ -1,5 +1,5 @@
 
-angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 'User',
+angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 'UserService',
   function($scope, $http, User) {
     this.myForm = {};
     console.log(this.myForm);
