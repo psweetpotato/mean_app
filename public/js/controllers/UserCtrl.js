@@ -7,8 +7,7 @@ angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 
 
     this.myForm.submitTheForm = function($http, userData){
       console.log(userData);
-      var userData = this.myForm;
-      $http.post('/api/users', userData)
+      User.create(userData);
     };
 
   }]);

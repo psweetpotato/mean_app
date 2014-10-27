@@ -33,6 +33,7 @@ var Best = require('./models/models').Best;
             user.id = req.id;
             user.name = req.name;
             user.email = req.email;
+            console.log(user.id)
             user.save(function(err) {
                 if (err)
                 res.send(err);
