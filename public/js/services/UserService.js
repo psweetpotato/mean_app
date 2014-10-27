@@ -8,6 +8,7 @@ angular.module('UserService', []).factory('User', ['$http', function($http) {
 
         create : function(userData) {
           console.log("factory create");
+          console.log(userData);
           $http.post('/api/users', userData);
         },
 

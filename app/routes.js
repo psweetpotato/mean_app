@@ -30,10 +30,9 @@ var Best = require('./models/models').Best;
         app.post('/api/users', function(req, res){
             console.log('routes post');
             var user = new User();
-            user.id = req.id;
-            user.name = req.name;
-            user.email = req.email;
-            console.log(user.name);
+            user.name = req.body.name;
+            user.email = req.body.email;
+            console.log(req.body.name);
             user.save(function(err) {
                 if (err)
                 res.send(err);
