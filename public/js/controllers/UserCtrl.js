@@ -1,5 +1,5 @@
-angular.module('app')
- .controller("UserController", ['$scope', '$http', 'UserFactory',
+
+appModule.controller("UserController", ['$scope', '$http', 'UserFactory',
   function($scope, $http, UserFactory) {
     this.myForm = {};
     console.log(this.myForm);

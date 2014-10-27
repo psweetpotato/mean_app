@@ -1,4 +1,5 @@
-angular.module('app').factory('UserFactory', ['$http', function($http) {
+
+appModule.factory('UserFactory', ['$http', function($http) {
 
     return {
         // call to get all users
