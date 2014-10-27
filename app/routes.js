@@ -62,7 +62,7 @@ var Best = require('./models/models').Best;
              best.lat = req.body.lat;
              best.lon = req.body.lon;
              best.address = req.body.address;
-             best.user = req.body.user;
+             best.user.push("544e939a59630d151c7b59d4");
              best.save(function(err) {
                  if (err)
                  res.send(err);
