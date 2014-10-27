@@ -7,6 +7,7 @@ angular.module('BestService', []).factory('Best', ['$http', function($http) {
         },
         // call to create a best
         create : function(userData) {
+            console.log(bestData);
             return $http.post('/api/bests', bestData);
         },
 

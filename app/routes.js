@@ -56,12 +56,13 @@ var Best = require('./models/models').Best;
              });
          });
          app.post('/api/bests', function(req, res){
+            console.log("routes best post");
              var best = new Best();
-             best.name = req.name;
-             best.lat = req.lat;
-             best.lon = req.lon;
-             best.address = req.address;
-             best.user = req.user;
+             best.name = req.body.name;
+             best.lat = req.body.lat;
+             best.lon = req.body.lon;
+             best.address = req.body.address;
+             best.user = req.body.user;
              best.save(function(err) {
                  if (err)
                  res.send(err);
