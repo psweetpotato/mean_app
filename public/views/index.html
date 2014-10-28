@@ -14,7 +14,7 @@
     <script src="js/app.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
-<link href="public/style.css" rel="stylesheet" type="text/css">
+<!-- <link href="public/style.css" rel="stylesheet" type="text/css"> -->
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
@@ -127,8 +127,8 @@ $.get('/api/bests',  function(req, res) {
 //     }
 
 // });
-///user search to add bests
-var keyword = 'gruppo';
+///user search with keyword to add bests
+var keyword = 'pala';
 var searchAll = L.layerGroup().addTo(map);
 var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
   '?client_id=CLIENT_ID' +
@@ -150,6 +150,7 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
     // Transform each venue result into a marker on the map.
     for (var i = 0; i < result.response.venues.length; i++) {
       var venue = result.response.venues[i];
+      console.log(venue)
       var latlng = L.latLng(venue.location.lat, venue.location.lng);
       var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
@@ -159,12 +160,13 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
           })
         })
       .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
-        venue.name + '</a></strong><br/>'  )
+        venue.name + "</a></strong><br/><button id='addBest' class='" + venue.name + "'>Add Best</button>")
         .addTo(searchAll);
-    }
-
-});
-
+      $("#addBest").on('click', function(){
+        console.log(venue.name);
+      })
+    };
+  });
 </script>
 </body>
 </html>
