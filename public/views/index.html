@@ -130,7 +130,7 @@ $.get('/api/bests',  function(req, res) {
 
 // });
 ///user search with keyword to add bests
-var keyword = 'pala';
+var keyword = 'Van leeuwen';
 var searchAll = L.layerGroup().addTo(map);
 var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
   '?client_id=CLIENT_ID' +
@@ -164,10 +164,10 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
       .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
         venue.name + "</a></strong><br/><button id='addBest' class='" + venue.name + "'>Add Best</button>")
         .addTo(searchAll);
-      $("#addBest").on('click', function(){
-        console.log(venue.name);
-      })
-    };
+    }
+});
+  $("#addBest").on('click', function(){
+        console.log('clicked!');
   });
 </script>
 </body>
