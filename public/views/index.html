@@ -4,6 +4,14 @@
 <meta charset=utf-8 />
 <title>Map</title>
 <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="js/services/BestService.js"></script>
+    <script src="js/controllers/BestCtrl.js"></script>
+    <script src="js/services/UserService.js"></script>
+    <script src="js/controllers/UserCtrl.js"></script>
+    <script src="js/appRoutes.js"></script>
+    <script src="js/app.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
 <style>
@@ -42,33 +50,53 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
 
 // Keep our place markers organized in a nice group.
 var foursquarePlaces = L.layerGroup().addTo(map);
+var allBests = L.layerGroup().addTo(map);
 
-// Use jQuery to make an AJAX request to Foursquare to load markers data.
-$.getJSON(API_ENDPOINT
-    .replace('CLIENT_ID', CLIENT_ID)
-    .replace('CLIENT_SECRET', CLIENT_SECRET)
-    .replace('LATLON', map.getCenter().lat +
-        ',' + map.getCenter().lng), function(result, status) {
-
-    if (status !== 'success') return alert('Request to Foursquare failed');
-
-    // Transform each venue result into a marker on the map.
-    for (var i = 0; i < result.response.venues.length; i++) {
-      var venue = result.response.venues[i];
-      var latlng = L.latLng(venue.location.lat, venue.location.lng);
-      var marker = L.marker(latlng, {
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    var venue = req[i].name;
+    var latlng = L.latLng(req[i].lat, req[i].lon);
+    var address = req[i].address;
+    var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
             'marker-color': '#BE9A6B',
             'marker-symbol': 'cafe',
             'marker-size': 'large'
           })
         })
-      .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
-        venue.name + '</a></strong>')
-        .addTo(foursquarePlaces);
-    }
-
+      .bindPopup('venue' + 'address')
+        .addTo(allBests);
+  }
 });
+
+
+// // Use jQuery to make an AJAX request to Foursquare to load markers data.
+// $.getJSON(API_ENDPOINT
+//     .replace('CLIENT_ID', CLIENT_ID)
+//     .replace('CLIENT_SECRET', CLIENT_SECRET)
+//     .replace('LATLON', map.getCenter().lat +
+//         ',' + map.getCenter().lng), function(result, status) {
+
+//     if (status !== 'success') return alert('Request to Foursquare failed');
+
+//     // Transform each venue result into a marker on the map.
+//     for (var i = 0; i < result.response.venues.length; i++) {
+//       var venue = result.response.venues[i];
+//       var latlng = L.latLng(venue.location.lat, venue.location.lng);
+//       var marker = L.marker(latlng, {
+//           icon: L.mapbox.marker.icon({
+//             'marker-color': '#BE9A6B',
+//             'marker-symbol': 'cafe',
+//             'marker-size': 'large'
+//           })
+//         })
+//       .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
+//         venue.name + '</a></strong>')
+//         .addTo(foursquarePlaces);
+//     }
+
+// });
 </script>
 </body>
 </html>

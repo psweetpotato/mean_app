@@ -54,31 +54,52 @@ var Best = require('./models/models').Best;
                      res.send(err);
                  res.json(bests);
              });
-         });
-         app.post('/api/bests', function(req, res){
+         })
+
+        app.post('/api/bests', function(req, res){
             console.log("routes best post");
              var best = new Best();
              best.name = req.body.name;
              best.lat = req.body.lat;
              best.lon = req.body.lon;
              best.address = req.body.address;
-             best.user.push("544e939a59630d151c7b59d4");
+             best.user.push("544e939a59630d151c7b59d4"); //FIXME currently hardcoded
              best.save(function(err) {
                  if (err)
                  res.send(err);
                  res.json({ message: 'Best created!' });
              });
-         });
-         app.delete('/api/bests', function(req, res){
-             Best.delete(function(err){
-                 // add delete code
-             });
+         })
+
+        app.delete('/api/bests', function(req, res){
+            console.log("app.delete");
+             Best.remove(function (err) {
+                if (!err) {
+                console.log("removed");
+                return res.send('');
+                } else {
+                console.log(err);
+                }
+            });
          });
 
+        app.get('/api/bests/:id', function(req, res) {
+            Best.findById(req.params.id, function(err, best) {
+                console.log(req.params.id);
+            if (err)
+                res.send(err);
+            res.json(best);
+        });
 
+        app.delete('/api/bests/:id', function(req, res){
+            Best.remove({_id: req.params.id}, function(err, best) {
+            if (err)
+                res.send(err);
+            res.json({ message: 'Successfully deleted' });
+            });
+        })
         // frontend routes =========================================================
         // route to handle all angular requests
-
 
         app.get('/index', function(req, res) {
             res.sendfile('./public/views/index.html'); // load our public/index.html file
@@ -89,6 +110,5 @@ var Best = require('./models/models').Best;
         app.get('/newbest', function(req, res) {
             res.sendfile('./public/views/best.html'); // load our public/best.html file
         });
-
-
-};
+});
+        };

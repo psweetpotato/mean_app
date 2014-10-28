@@ -9,7 +9,7 @@ angular.module('BestService', []).factory('Best', ['$http', function($http) {
       console.log(bestData);
       $http.post('/api/bests', bestData);
       },
-    // call to DELETE a best
+
     delete : function(id) {
       $http.delete('/api/bests/' + id);
     }
