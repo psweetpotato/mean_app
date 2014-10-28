@@ -16,6 +16,7 @@ var bestSchema = mongoose.Schema({
     lat: Number,
     lon: Number,
     address: String,
+    category: String,
     user : [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
   });
 

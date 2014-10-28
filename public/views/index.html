@@ -48,10 +48,11 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
   '&query='+ category +
   '&callback=?';
 
-// Keep our place markers organized in a nice group.
-var foursquarePlaces = L.layerGroup().addTo(map);
-var allBests = L.layerGroup().addTo(map);
 
+//////encapsulate so each layer is toggled on and off via front end
+
+// loads all bests
+var allBests = L.layerGroup().addTo(map);
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -65,13 +66,39 @@ $.get('/api/bests',  function(req, res) {
             'marker-size': 'large'
           })
         })
-      .bindPopup('venue' + 'address')
+      .bindPopup(venue +'<br/>' + address)
         .addTo(allBests);
+  }
+});
+//loads bests of one category
+
+var oneCategory = L.layerGroup().addTo(map);
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category === "Brunch") { //hardcoded FIXME
+    var venue = req[i].name;
+    var latlng = L.latLng(req[i].lat, req[i].lon);
+    var address = req[i].address;
+    var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#BE9A6B',
+            'marker-symbol': 'cafe',
+            'marker-size': 'large'
+          })
+        })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(oneCategory);
+      }
   }
 });
 
 
+
+
+
 // // Use jQuery to make an AJAX request to Foursquare to load markers data.
+// var foursquarePlaces = L.layerGroup().addTo(map);// Keep our place markers organized in a nice group.
 // $.getJSON(API_ENDPOINT
 //     .replace('CLIENT_ID', CLIENT_ID)
 //     .replace('CLIENT_SECRET', CLIENT_SECRET)
