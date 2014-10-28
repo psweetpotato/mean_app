@@ -100,7 +100,7 @@ var Best = require('./models/models').Best;
         })
         // frontend routes =========================================================
         // route to handle all angular requests
-
+});
         app.get('/index', function(req, res) {
             res.sendfile('./public/views/index.html'); // load our public/index.html file
         });
@@ -110,5 +110,5 @@ var Best = require('./models/models').Best;
         app.get('/newbest', function(req, res) {
             res.sendfile('./public/views/best.html'); // load our public/best.html file
         });
-});
+
         };
