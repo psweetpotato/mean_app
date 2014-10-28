@@ -14,12 +14,14 @@
     <script src="js/app.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
+<link href="public/style.css" rel="stylesheet" type="text/css">
 <style>
   body { margin:0; padding:0; }
   #map { position:absolute; top:0; bottom:0; width:100%; }
 </style>
 </head>
 <body>
+  <div id="catToggle"></div>
 <div id='map'></div>
 
 <!-- jQuery is required for this example. -->
@@ -61,22 +63,23 @@ $.get('/api/bests',  function(req, res) {
     var address = req[i].address;
     var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
-            'marker-color': '#BE9A6B',
-            'marker-symbol': 'cafe',
-            'marker-size': 'large'
+            'marker-color': '#FFA547',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
           })
         })
       .bindPopup(venue +'<br/>' + address)
         .addTo(allBests);
   }
 });
+
 //loads bests of one category
 
 var oneCategory = L.layerGroup().addTo(map);
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
-    if (req[i].category === "Brunch") { //hardcoded FIXME
+    if (req[i].category === "Coffee") { //hardcoded FIXME
     var venue = req[i].name;
     var latlng = L.latLng(req[i].lat, req[i].lon);
     var address = req[i].address;
@@ -84,7 +87,7 @@ $.get('/api/bests',  function(req, res) {
           icon: L.mapbox.marker.icon({
             'marker-color': '#BE9A6B',
             'marker-symbol': 'cafe',
-            'marker-size': 'large'
+            'marker-size': 'medium'
           })
         })
       .bindPopup(venue +'<br/>' + address)
