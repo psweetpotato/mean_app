@@ -63,7 +63,7 @@ $.get('/api/bests',  function(req, res) {
     var address = req[i].address;
     var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
-            'marker-color': '#FFA547',
+            'marker-color': '#F9AC6D',
             'marker-symbol': 'restaurant',
             'marker-size': 'medium'
           })
@@ -127,6 +127,44 @@ $.get('/api/bests',  function(req, res) {
 //     }
 
 // });
+///user search to add bests
+var keyword = 'gruppo';
+var searchAll = L.layerGroup().addTo(map);
+var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
+  '?client_id=CLIENT_ID' +
+  '&client_secret=CLIENT_SECRET' +
+  '&v=20130815' +
+  '&ll=LATLON' +
+  '&query='+ keyword +
+  '&limit=5'
+  '&callback=?';
+
+  $.getJSON(API_ENDPOINT
+    .replace('CLIENT_ID', CLIENT_ID)
+    .replace('CLIENT_SECRET', CLIENT_SECRET)
+    .replace('LATLON', map.getCenter().lat +
+        ',' + map.getCenter().lng), function(result, status) {
+
+    if (status !== 'success') return alert('Request to Foursquare failed');
+
+    // Transform each venue result into a marker on the map.
+    for (var i = 0; i < result.response.venues.length; i++) {
+      var venue = result.response.venues[i];
+      var latlng = L.latLng(venue.location.lat, venue.location.lng);
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+        })
+      .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
+        venue.name + '</a></strong><br/>'  )
+        .addTo(searchAll);
+    }
+
+});
+
 </script>
 </body>
 </html>
