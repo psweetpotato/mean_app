@@ -1,6 +1,6 @@
 angular.module('LayerCtrl', [])
   .controller('LayerController', ['$scope', function($scope) {
-    $scope.colors = [
+    $scope.categories = [
       {name: 'Bagels'},
       {name: 'Pizza'},
       {name: 'Coffee'},
