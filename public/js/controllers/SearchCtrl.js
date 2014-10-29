@@ -39,6 +39,7 @@ function SearchCtrl($scope, $http){
         venue.name +
         "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
         .addTo(searchAll);
+
     }
 });
   $("#map").on('click', '.addBest', function(){
@@ -53,6 +54,7 @@ function SearchCtrl($scope, $http){
       category_id: 0,
       user: "544e939a59630d151c7b59d4"
     });
+      $(this).hide();
   });
   }
 };
