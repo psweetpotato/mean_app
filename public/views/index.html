@@ -20,10 +20,12 @@
 
 </head>
 <body>
-  <div id="catToggle" class="overlay" ng-controller="LayerController">
-<select ng-model="theCategories" ng-options="category.name for category in categories">
-<option value=""> Pick a Category </option>
-</select>
+  <div id="catToggle" class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
+<span>
+    <select ng-model="myLayers" ng-options="layer.name for layer in layers">
+      <option value=""> Pick a Category </option>
+    </select>
+  </span>
   </div>
 <div id='map'></div>
 
