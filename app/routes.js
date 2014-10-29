@@ -1,26 +1,20 @@
-// grab the user model we just created
-
 var User = require('./models/models').User;
 var Best = require('./models/models').Best;
   module.exports = function(app) {
 
-  // server routes ===========================================================
-  // handle things like api calls
-  // authentication routes
   app.use(function(req, res, next) {
     console.log('Something is happening.');
-    next(); // make sure we go to the next routes and don't stop here
+    next();
   });
-// sample api route
+
   app.get('/api/users', function(req, res) {
-  // use mongoose to get all users in the database
     User.find(function(err, users) {
       if (err)
         res.send(err);
-        res.json(users); // return all users in JSON format
+        res.json(users);
     });
   });
-        // route to handle creating
+
   app.post('/api/users', function(req, res){
     console.log('routes post');
     var user = new User();
@@ -33,13 +27,8 @@ var Best = require('./models/models').Best;
         res.json({ message: 'User created!' });
     });
   });
-        // route to handle deleting
-  app.delete('/api/users', function(req, res){
-    User.delete(function(err){
-      // add deleting code here
-    });
-  });
-// bests routes
+
+
   app.get('/api/bests', function(req, res) {
     Best.find(function(err, bests) {
       if (err)
@@ -105,16 +94,15 @@ var Best = require('./models/models').Best;
         res.json({ message: 'Successfully deleted' });
     });
   });
-        // frontend routes =========================================================
-        // route to handle all angular requests
+
   app.get('/map', function(req, res) {
-    res.sendfile('./public/views/index.html'); // load our public/index.html file
+    res.sendfile('./public/views/index.html');
   });
   app.get('/newuser', function(req, res) {
-    res.sendfile('./public/views/user.html'); // load our public/user.html file
+    res.sendfile('./public/views/user.html');
   });
   app.get('/newbest', function(req, res) {
-    res.sendfile('./public/views/best.html'); // load our public/best.html file
+    res.sendfile('./public/views/best.html');
   });
 
 };

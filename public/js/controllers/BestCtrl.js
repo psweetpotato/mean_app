@@ -8,4 +8,5 @@ angular.module('BestCtrl', []).controller('BestController', ['$scope', '$http', 
       console.log(bestData);
       Best.create(bestData);
     };
-}]);
+  }
+]);

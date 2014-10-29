@@ -6,12 +6,10 @@ angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 
     console.log(this.myForm);
 
     this.myForm.submitTheForm = function($http, userData){
-
       console.log($scope.user.myForm);
       var userData = $scope.user.myForm;
       console.log(userData);
       User.create(userData);
     };
-
-  }]);
-
+  }
+]);

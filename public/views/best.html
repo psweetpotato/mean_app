@@ -1,26 +1,22 @@
 <body ng-app="app">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
-    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
-
-    <script src="js/services/BestService.js"></script>
-    <script src="js/controllers/BestCtrl.js"></script>
-    <script src="js/services/UserService.js"></script>
-    <script src="js/controllers/UserCtrl.js"></script>
-    <script src="js/appRoutes.js"></script>
-    <script src="js/app.js"></script>
-
+  <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+  <script src="js/services/BestService.js"></script>
+  <script src="js/controllers/BestCtrl.js"></script>
+  <script src="js/services/UserService.js"></script>
+  <script src="js/controllers/UserCtrl.js"></script>
+  <script src="js/appRoutes.js"></script>
+  <script src="js/app.js"></script>
 <div>
-    <form name="myBestForm" ng-controller="BestController as best" ng-submit="best.myBestForm.submitTheBestForm(myBestForm)">
-        <input type="text" name="name" ng-model="best.myBestForm.name"> Name <br/>
-        <input type="text" name="lat"  ng-model="best.myBestForm.lat"> Latitude <br/>
-        <input type="text" name="lon"  ng-model="best.myBestForm.lon"> Longitude <br/>
-        <input type="text" name="address"  ng-model="best.myBestForm.address"> Address <br/>
-        <input type="text" name="category"  ng-model="best.myBestForm.category"> Category <br/>
-        <input type="text" name="category_id"  ng-model="best.myBestForm.category_id"> Category Id<br/>
-        <!-- <input type="hidden" name="user"  ng-model="best.myBestForm.user"><br/> --><!--  TODO:should pull user from params/sessions -->
-        <input type="submit" id="submit" value="Submit" />
-    </form>
-
+  <form name="myBestForm" ng-controller="BestController as best" ng-submit="best.myBestForm.submitTheBestForm(myBestForm)">
+    <input type="text" name="name" ng-model="best.myBestForm.name"> Name <br/>
+    <input type="text" name="lat"  ng-model="best.myBestForm.lat"> Latitude <br/>
+    <input type="text" name="lon"  ng-model="best.myBestForm.lon"> Longitude <br/>
+    <input type="text" name="address"  ng-model="best.myBestForm.address"> Address <br/>
+    <input type="text" name="category"  ng-model="best.myBestForm.category"> Category <br/>
+    <input type="text" name="category_id"  ng-model="best.myBestForm.category_id"> Category Id<br/>
+    <!-- <input type="hidden" name="user"  ng-model="best.myBestForm.user"><br/> --><!--  TODO:should pull user from params/sessions -->
+    <input type="submit" id="submit" value="Submit" />
+  </form>
 </div>
-
 </body>

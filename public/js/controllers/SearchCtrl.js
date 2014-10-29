@@ -1,6 +1,5 @@
 function SearchCtrl($scope, $http){
   $scope.search = function(){
-    var searchword;
     searchword = $scope.keywords;
     var searchAll = L.layerGroup().addTo(map);
     var CLIENT_ID = 'EDQQDZUP4CDNAVQTBA40QGR5FC5WPEASPLT5RX1B5XFOAGX5';
@@ -19,11 +18,8 @@ function SearchCtrl($scope, $http){
     .replace('CLIENT_SECRET', CLIENT_SECRET)
     .replace('LATLON', map.getCenter().lat +
         ',' + map.getCenter().lng), function(result, status) {
-
     if (status !== 'success') return alert('Request to Foursquare failed');
-    // make global so we can access it on click
     venues = result.response.venues;
-    // Transform each venue result into a marker on the map.
     for (var i = 0; i < result.response.venues.length; i++) {
       var venue = result.response.venues[i];
       console.log(venue)
@@ -40,7 +36,6 @@ function SearchCtrl($scope, $http){
         venue.name +
         "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
         .addTo(searchAll);
-
     }
 });
   $("#map").on('click', '.addBest', function(){
@@ -59,5 +54,3 @@ function SearchCtrl($scope, $http){
   });
   }
 };
-
-
