@@ -10,6 +10,7 @@
     <script src="js/controllers/BestCtrl.js"></script>
     <script src="js/services/UserService.js"></script>
     <script src="js/controllers/UserCtrl.js"></script>
+    <script src="js/controllers/LayerCtrl.js"></script>
     <script src="js/appRoutes.js"></script>
     <script src="./routes.js"></script>
     <script src="js/app.js"></script>
@@ -139,7 +140,7 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
   '&v=20130815' +
   '&ll=LATLON' +
   '&query='+ keyword +
-  '&limit=5'
+  '&limit=7'
   '&callback=?';
 
   $.getJSON(API_ENDPOINT
@@ -176,14 +177,15 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
     console.log('clicked!', this);
     var number = $(this).data().venue_id;
     console.log(venues[number]);
-    var newBest = {name: venues[number].name,
-      lat: venues[number].location.lat,
-      lon: venues[number].location.lon,
-      address: venues[number].location.address,
-      category: 'category', //FIXME hardcoded
-      user: "544e939a59630d151c7b59d4"
-    };
-    app.post(newBest);
+    //FIXME add posting code
+    // var newBest = {name: venues[number].name,
+    //   lat: venues[number].location.lat,
+    //   lon: venues[number].location.lon,
+    //   address: venues[number].location.address,
+    //   category: 'category', //FIXME hardcoded
+    //   user: "544e939a59630d151c7b59d4"
+    // };
+    // app.post(newBest);
   });
 </script>
 </body>
