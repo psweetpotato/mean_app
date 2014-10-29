@@ -20,7 +20,7 @@
 
 </head>
 <body>
-  <div id="catToggle" class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
+  <div class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
   <span>
 
     <select id="catSelector" ng-model="myLayers" ng-options="layer.name for layer in layers" >
@@ -81,7 +81,8 @@ $.get('/api/bests',  function(req, res) {
 });
 
 //loads bests of each category
-var Bagels = L.layerGroup();
+var categoryLayer = L.layerGroup();
+var addBagel = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -97,12 +98,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Bagels);
+        .addTo(categoryLayer);
     }
   }
 });
-
-var Brunch = L.layerGroup();
+};
+var addBrunch = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -118,12 +119,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Brunch);
+        .addTo(categoryLayer);
     }
   }
 });
-
-var Burger = L.layerGroup();
+};
+var addBurger = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -139,11 +140,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Burger);
+        .addTo(categoryLayer);
     }
   }
 });
-var Coffee = L.layerGroup();
+};
+var addCoffee = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -159,11 +161,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Coffee);
+        .addTo(categoryLayer);
     }
   }
 });
-var Dessert = L.layerGroup();
+};
+var addDessert = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -179,11 +182,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Dessert);
+        .addTo(categoryLayer);
     }
   }
 });
-var Doughnuts = L.layerGroup();
+};
+var addDoughnuts = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -199,11 +203,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Doughnuts);
+        .addTo(categoryLayer);
     }
   }
 });
-var IceCream = L.layerGroup();
+};
+var addIceCream = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -219,11 +224,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(IceCream);
+        .addTo(categoryLayer);
     }
   }
 });
-var Pizza = L.layerGroup();
+};
+var addPizza = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -239,11 +245,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Pizza);
+        .addTo(categoryLayer);
     }
   }
 });
-var Ramen = L.layerGroup();
+};
+var addRamen = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -259,11 +266,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Ramen);
+        .addTo(categoryLayer);
     }
   }
 });
-var Sushi = L.layerGroup();
+};
+var addSushi = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -279,11 +287,12 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Sushi);
+        .addTo(categoryLayer);
     }
   }
 });
-var Tacos = L.layerGroup();
+};
+var addTaco = function(){
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
@@ -299,66 +308,65 @@ $.get('/api/bests',  function(req, res) {
           })
       })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(Tacos);
+        .addTo(categoryLayer);
     }
   }
 });
-var layers = {
-  All: allBests,
-  Bagels: Bagels,
-  Brunch: Brunch,
-  Burger: Burger,
-  Coffee: Coffee,
-  Dessert: Dessert,
-  Doughnuts: Doughnuts,
-  IceCream: IceCream,
-  Pizza: Pizza,
-  Ramen: Ramen,
-  Sushi: Sushi,
-  Tacos: Tacos
-};
+}
 // adds each category layer to the map
 $('#catSelector').change(function (newCat){
       console.log(newCat.currentTarget.value);
       newCat = newCat.currentTarget.value;
       console.log(newCat);
-      // layers.clearLayers();
+      categoryLayer.clearLayers(map);
       switch (newCat) {
         case '0':
-          layers.All.addTo(map);
+          addAll();
+          categoryLayer.addTo(map);
           break;
         case '1':
-          layers.Bagels.addTo(map);
+          addBagel();
+          categoryLayer.addTo(map);
           break;
         case '2':
-          layers.Brunch.addTo(map);
+          addBrunch();
+          categoryLayer.addTo(map);
           break;
         case '3':
-          layers.Burger.addTo(map);
+          addBurger();
+          categoryLayer.addTo(map);
           break;
         case '4':
-          layers.Coffee.addTo(map);
+          addCoffee();
+          categoryLayer.addTo(map);
           break;
         case '5':
-          layers.Dessert.addTo(map);
+          addDessert();
+          categoryLayer.addTo(map);
           break;
         case '6':
-          layers.Doughnuts.addTo(map);
+          addDoughnuts();
+          categoryLayer.addTo(map);
           break;
         case '7':
-          layers.IceCream.addTo(map);
+          addIceCream();
+          categoryLayer.addTo(map);
           break;
         case '8':
-          layers.Pizza.addTo(map);
+          addPizza();
+          categoryLayer.addTo(map);
           break;
         case '9':
-          layers.Ramen.addTo(map);
+          addRamen();
+          categoryLayer.addTo(map);
           break;
         case '10':
-          layers.Sushi.addTo(map);
+          addSushi();
+          categoryLayer.addTo(map);
           break;
         case '11':
-          layers.Tacos.addTo(map);
+          addTaco();
+          categoryLayer.addTo(map);
           break;
       };
     });
