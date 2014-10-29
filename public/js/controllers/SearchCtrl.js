@@ -1,6 +1,7 @@
 function SearchCtrl($scope, $http){
   $scope.search = function(){
-    var searchword = $scope.keywords;
+    var searchword;
+    searchword = $scope.keywords;
     var searchAll = L.layerGroup().addTo(map);
     var CLIENT_ID = 'EDQQDZUP4CDNAVQTBA40QGR5FC5WPEASPLT5RX1B5XFOAGX5';
     var CLIENT_SECRET = 'U4MOAXGON03440H1RK0ZG1NUF11DT3TY24FQXPARVGGBOS4T';

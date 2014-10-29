@@ -107,7 +107,7 @@ var Best = require('./models/models').Best;
   });
         // frontend routes =========================================================
         // route to handle all angular requests
-  app.get('/index', function(req, res) {
+  app.get('/map', function(req, res) {
     res.sendfile('./public/views/index.html'); // load our public/index.html file
   });
   app.get('/newuser', function(req, res) {
