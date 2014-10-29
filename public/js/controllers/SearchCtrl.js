@@ -1,4 +1,4 @@
-function SearchCtrl($scope){
+function SearchCtrl($scope, $http){
   $scope.search = function(){
     var searchword = $scope.keywords;
     var searchAll = L.layerGroup().addTo(map);
@@ -37,56 +37,24 @@ function SearchCtrl($scope){
       .bindPopup(
         '<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
         venue.name +
-        "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add Best</button>")
+        "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
         .addTo(searchAll);
     }
 });
   $("#map").on('click', '.addBest', function(){
-    // how do i get the venue information
-    // for the particular button clicked on
     console.log('clicked!', this);
     var number = $(this).data().venue_id;
     console.log(venues[number]);
-    //FIXME add posting code
-    // var newBest = {name: venues[number].name,
-    //   lat: venues[number].location.lat,
-    //   lon: venues[number].location.lon,
-    //   address: venues[number].location.address,
-    //   category: 'category', //FIXME hardcoded
-    //   user: "544e939a59630d151c7b59d4"
-    // };
-    // app.post(newBest);
+    $http.post('/api/bests', {name: venues[number].name,
+      lat: venues[number].location.lat,
+      lon: venues[number].location.lng,
+      address: venues[number].location.address,
+      category: 'All', //FIXME hardcoded
+      category_id: 0,
+      user: "544e939a59630d151c7b59d4"
+    });
   });
   }
 };
-
-// Use jQuery to make an AJAX request to Foursquare to load markers data.
-// var foursquarePlaces = L.layerGroup().addTo(map);// Keep our place markers organized in a nice group.
-// $.getJSON(API_ENDPOINT
-//     .replace('CLIENT_ID', CLIENT_ID)
-//     .replace('CLIENT_SECRET', CLIENT_SECRET)
-//     .replace('LATLON', map.getCenter().lat +
-//         ',' + map.getCenter().lng), function(result, status) {
-
-//     if (status !== 'success') return alert('Request to Foursquare failed');
-
-//     // Transform each venue result into a marker on the map.
-//     for (var i = 0; i < result.response.venues.length; i++) {
-//       var venue = result.response.venues[i];
-//       var latlng = L.latLng(venue.location.lat, venue.location.lng);
-//       var marker = L.marker(latlng, {
-//           icon: L.mapbox.marker.icon({
-//             'marker-color': '#BE9A6B',
-//             'marker-symbol': 'cafe',
-//             'marker-size': 'large'
-//           })
-//         })
-//       .bindPopup('<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
-//         venue.name + '</a></strong>')
-//         .addTo(foursquarePlaces);
-//     }
-
-// });
-//user search with keyword to add bests
 
 
