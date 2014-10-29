@@ -12,7 +12,7 @@
     <script src="js/controllers/UserCtrl.js"></script>
     <script src="js/controllers/LayerCtrl.js"></script>
     <script src="js/appRoutes.js"></script>
-    <script src="./routes.js"></script>
+    <script src="js/index.js"></script>
     <script src="js/app.js"></script>
 <script src='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.js'></script>
 <link href='https://api.tiles.mapbox.com/mapbox.js/v2.1.4/mapbox.css' rel='stylesheet' />
@@ -37,6 +37,7 @@ L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3
 var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5')
     .setView([40.751, -73.985], 13);
 
+
 // Credit Foursquare for their wonderful data
 map.attributionControl
     .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
@@ -59,39 +60,32 @@ var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
 
 //////encapsulate so each layer is toggled on and off via front end
 
-// // loads all bests
-// var allBests = L.layerGroup().addTo(map);
-// $.get('/api/bests',  function(req, res) {
-//   console.log(req);
-//   for (var i = 0; i < req.length; i++) {
-//     var venue = req[i].name;
-//     var latlng = L.latLng(req[i].lat, req[i].lon);
-//     var address = req[i].address;
-//     var marker = L.marker(latlng, {
-//           icon: L.mapbox.marker.icon({
-//             'marker-color': '#F9AC6D',
-//             'marker-symbol': 'restaurant',
-//             'marker-size': 'medium'
-//           })
-//         })
-//       .bindPopup(venue +'<br/>' + address)
-//         .addTo(allBests);
-//   }
-// });
-
-//loads bests of one category
-$('#catSelector').change(function (newCat){
-      console.log(newCat.currentTarget.value);
-      var newCat = newCat.currentTarget.value;
-      console.log(newCat);
-var oneCategory = L.layerGroup().addTo(map);
+// loads all bests
+var allBests = L.layerGroup();
 $.get('/api/bests',  function(req, res) {
   console.log(req);
   for (var i = 0; i < req.length; i++) {
-    console.log(req[i].category_id);
-    console.log(newCat);
-    if (req[i].category_id == newCat) {
-      console.log(req[i].category);
+    var venue = req[i].name;
+    var latlng = L.latLng(req[i].lat, req[i].lon);
+    var address = req[i].address;
+    var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+        })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(allBests);
+  }
+});
+
+//loads bests of each category
+var Bagels = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 1) {
       var venue = req[i].name;
       var latlng = L.latLng(req[i].lat, req[i].lon);
       var address = req[i].address;
@@ -101,14 +95,273 @@ $.get('/api/bests',  function(req, res) {
             'marker-symbol': 'restaurant',
             'marker-size': 'medium'
           })
-        })
+      })
       .bindPopup(venue +'<br/>' + address)
-        .addTo(oneCategory);
-      }
+        .addTo(Bagels);
+    }
   }
 });
+
+var Brunch = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 2) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'bakery',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Brunch);
+    }
+  }
 });
 
+var Burger = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 3) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'fast-food',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Burger);
+    }
+  }
+});
+var Coffee = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 4) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'cafe',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Coffee);
+    }
+  }
+});
+var Dessert = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 5) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Dessert);
+    }
+  }
+});
+var Doughnuts = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 6) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Doughnuts);
+    }
+  }
+});
+var IceCream = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 7) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'ice-cream',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(IceCream);
+    }
+  }
+});
+var Pizza = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 8) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Pizza);
+    }
+  }
+});
+var Ramen = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 9) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Ramen);
+    }
+  }
+});
+var Sushi = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 10) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Sushi);
+    }
+  }
+});
+var Tacos = L.layerGroup();
+$.get('/api/bests',  function(req, res) {
+  console.log(req);
+  for (var i = 0; i < req.length; i++) {
+    if (req[i].category_id == 11) {
+      var venue = req[i].name;
+      var latlng = L.latLng(req[i].lat, req[i].lon);
+      var address = req[i].address;
+      var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+      })
+      .bindPopup(venue +'<br/>' + address)
+        .addTo(Tacos);
+    }
+  }
+});
+var layers = {
+  All: allBests,
+  Bagels: Bagels,
+  Brunch: Brunch,
+  Burger: Burger,
+  Coffee: Coffee,
+  Dessert: Dessert,
+  Doughnuts: Doughnuts,
+  IceCream: IceCream,
+  Pizza: Pizza,
+  Ramen: Ramen,
+  Sushi: Sushi,
+  Tacos: Tacos
+};
+// adds each category layer to the map
+$('#catSelector').change(function (newCat){
+      console.log(newCat.currentTarget.value);
+      newCat = newCat.currentTarget.value;
+      console.log(newCat);
+      // layers.clearLayers();
+      switch (newCat) {
+        case '0':
+          layers.All.addTo(map);
+          break;
+        case '1':
+          layers.Bagels.addTo(map);
+          break;
+        case '2':
+          layers.Brunch.addTo(map);
+          break;
+        case '3':
+          layers.Burger.addTo(map);
+          break;
+        case '4':
+          layers.Coffee.addTo(map);
+          break;
+        case '5':
+          layers.Dessert.addTo(map);
+          break;
+        case '6':
+          layers.Doughnuts.addTo(map);
+          break;
+        case '7':
+          layers.IceCream.addTo(map);
+          break;
+        case '8':
+          layers.Pizza.addTo(map);
+          break;
+        case '9':
+          layers.Ramen.addTo(map);
+          break;
+        case '10':
+          layers.Sushi.addTo(map);
+          break;
+        case '11':
+          layers.Tacos.addTo(map);
+          break;
+      };
+    });
 
 
 
@@ -196,6 +449,13 @@ $.get('/api/bests',  function(req, res) {
 //     // };
 //     // app.post(newBest);
 //   });
+
+
+
+
+
 </script>
+
+
 </body>
 </html>
