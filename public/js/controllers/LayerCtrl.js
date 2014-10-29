@@ -3,17 +3,16 @@ angular.module('LayerCtrl', [])
     $scope.layers = [
       {name: 'All'},
       {name: 'Bagels'},
-      {name: 'Pizza'},
-      {name: 'Coffee'},
       {name: 'Brunch'},
-      {name: 'Sushi'},
-      {name: 'Tacos'},
-      {name: 'Doughnuts'},
-      {name: 'Ramen'},
       {name: 'Burger'},
+      {name: 'Coffee'},
+      {name: 'Dessert'},
+      {name: 'Doughnuts'},
       {name: 'Ice Cream'},
+      {name: 'Pizza'},
+      {name: 'Ramen'},
       {name: 'Sushi'},
-      {name: 'Dessert'}
+      {name: 'Tacos'}
     ];
     $scope.myLayers = $scope.layers[0];
   }]);

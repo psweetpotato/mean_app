@@ -55,6 +55,7 @@ var Best = require('./models/models').Best;
       best.lon = req.body.lon;
       best.address = req.body.address;
       best.category = req.body.category;
+      best.category_id = req.body.category_id;
       best.user.push("544e939a59630d151c7b59d4"); //FIXME currently hardcoded
       best.save(function(err) {
         if (err)
