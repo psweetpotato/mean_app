@@ -7,11 +7,18 @@ html{
 }
 span {
   float: right;
-  position: absolute; top: 150px; right: 175px;
+  position: absolute; top: 200px; right: 175px;
   font-family: 'IM Fell French Canon', serif;
-  font-size: 3.5em;
+  font-size: 2em;
 }
 a {
   color: #353736;
   text-decoration: none;
+}
+h1{
+  color: #353736;
+  float: right;
+  position: absolute; top: 75px; right: 175px;
+  font-family: 'Averia Serif Libre', cursive;
+  font-size: 4em;
 }
