@@ -5,7 +5,7 @@ TasteBuds is a platform for proclaiming what each user considers to be the best 
 
 In future versions, users will be able to see their friends favorite places and when opinions differ a user will be able to challenge their friend to try out a new place. If the user can sway their friend's opinion they will be rewarded with badges to show the community that they are a tastemaker. 
 
-[Click here to see the app.](http://https://stormy-anchorage-5874.herokuapp.com)
+<a href="http://https://stormy-anchorage-5874.herokuapp.com">Click here to see the app.</a>
 #####Technologies
 This project was a challenge for me because I decided at the forefront that I wanted a single page application without the bulkiness of RoR behind it. After some research into the idea of single page appplications I decided that I would have to teach myself a new stack in order to execute this smoothly. Below are the technologies I used; those denoted with a ^ were completely new to me less than a week ago. 
 <ul>
