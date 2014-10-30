@@ -1,0 +1,17 @@
+html{
+  background: url(http://i.imgur.com/jKL6ZVJ.jpg) no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+span {
+  float: right;
+  position: absolute; top: 150px; right: 175px;
+  font-family: 'IM Fell French Canon', serif;
+  font-size: 3.5em;
+}
+a {
+  color: #353736;
+  text-decoration: none;
+}
