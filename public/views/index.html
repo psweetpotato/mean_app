@@ -25,7 +25,8 @@
   <div class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
     <span>
       <select id="catSelector" ng-model="myLayers" ng-options="layer.name for layer in layers" >
-        <option value=" <%= myLayers.name %>" ng-model="myLayers" ng-click="change(value);">Pick a Category</option>
+
+        <option value=" <%= myLayers.name %>" ng-model="myLayers" ng-click="change(value);"></option>
       </select>
     </span>
     <span>

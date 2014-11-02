@@ -12,8 +12,7 @@ angular.module('LayerCtrl', [])
       {name: 'Pizza'},
       {name: 'Ramen'},
       {name: 'Sushi'},
-      {name: 'Tacos'},
-      {name: 'Pick a Category'}
+      {name: 'Tacos'}
     ];
     $scope.myLayers = $scope.layers[0];
   }]);
