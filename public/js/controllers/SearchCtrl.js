@@ -1,7 +1,9 @@
 function SearchCtrl($scope, $http){
+  var searchAll = L.layerGroup().addTo(map);
   $scope.search = function(){
     searchword = $scope.keywords;
-    var searchAll = L.layerGroup().addTo(map);
+    categoryLayer.clearLayers(map);
+    searchAll.clearLayers(map);
     var CLIENT_ID = 'EDQQDZUP4CDNAVQTBA40QGR5FC5WPEASPLT5RX1B5XFOAGX5';
     var CLIENT_SECRET = 'U4MOAXGON03440H1RK0ZG1NUF11DT3TY24FQXPARVGGBOS4T';
     var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
@@ -12,7 +14,6 @@ function SearchCtrl($scope, $http){
       '&query='+ searchword +
       '&limit=7'
       '&callback=?';
-
   $.getJSON(API_ENDPOINT
     .replace('CLIENT_ID', CLIENT_ID)
     .replace('CLIENT_SECRET', CLIENT_SECRET)
@@ -26,9 +27,9 @@ function SearchCtrl($scope, $http){
       var latlng = L.latLng(venue.location.lat, venue.location.lng);
       var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
-            'marker-color': '#F9AC6D',
+            'marker-color': '#F96D6D',
             'marker-symbol': 'restaurant',
-            'marker-size': 'medium'
+            'marker-size': 'large'
           })
         })
       .bindPopup(
