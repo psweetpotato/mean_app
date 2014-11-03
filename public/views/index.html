@@ -47,7 +47,6 @@ map.attributionControl
     .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
 
 var addAll = function(){
-  var allBests = L.layerGroup();
   $.get('/api/bests',  function(req, res) {
     console.log(req);
     for (var i = 0; i < req.length; i++) {

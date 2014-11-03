@@ -45,11 +45,15 @@ var Best = require('./models/models').Best;
       best.address = req.body.address;
       best.category = req.body.category;
       best.category_id = req.body.category_id;
+      best.venue_id = req.body.venue_id;
       best.user.push("544e939a59630d151c7b59d4"); //FIXME currently hardcoded
       best.save(function(err) {
-        if (err)
-          res.send(err);
-          res.json({ message: 'Best created!' });
+        if (!err) {
+        console.log("created");
+        return res.send('');
+        } else {
+        console.log(err);
+        };
       });
   });
 
@@ -79,6 +83,7 @@ var Best = require('./models/models').Best;
       if (err)
         res.send(err);
         best.name = req.body.name;
+        // add all attributes to be updated
         best.save(function(err){
           if(err)
           res.send(err);
@@ -91,7 +96,7 @@ var Best = require('./models/models').Best;
     Best.remove({_id: req.params.id}, function(err, best) {
       if (err)
         res.send(err);
-        res.json({ message: 'Successfully deleted' });
+        res.json({message: 'deleted!'});
     });
   });
 

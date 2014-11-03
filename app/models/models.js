@@ -16,6 +16,7 @@ var bestSchema = mongoose.Schema({
   address: String,
   category: String,
   category_id: Number,
+  venue_id: String,
   user : [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
 });
 
