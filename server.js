@@ -1,10 +1,14 @@
 // modules =================================================
 var express        = require('express');
+var flash          = require('connect-flash');
 var app            = express();
 var bodyParser     = require('body-parser');
 var methodOverride = require('method-override');
 var mongoose       = require('mongoose');
-
+var passport       = require('passport');
+var cookieParser   = require('cookie-parser');
+var session        = require('express-session');
+var morgan         = require('morgan');
 // configuration ===========================================
 
 // config files
@@ -15,6 +19,8 @@ var port = process.env.PORT || 8080;
 
 // connect to our mongoDB database
 mongoose.connect(db.url);
+app.use(morgan('dev')); // log every request to the console
+
 
 // get all data/stuff of the body (POST) parameters
 // parse application/json
@@ -32,20 +38,27 @@ app.use(methodOverride('X-HTTP-Method-Override'));
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
 
-// routes ==================================================
-require('./app/routes')(app); // configure our routes
-
 // start app ===============================================
 // startup our app at http://localhost:8080
-app.listen(port);
 
-// shoutout to the user
-console.log('Magic happens on port ' + port);
+// configure passport
+app.set('view engine', 'ejs'); // set up ejs for templating
+
+// required for passport
+app.use(cookieParser());
+app.use(session({ secret: 'potatosweet', saveUninitialized: true, resave: true })); // session secret
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash());
+// routes ==================================================
+require('./app/routes')(app, passport); // configure our routes
+require('./config/passport')(passport); // pass passport for configuration
 
 // expose app
 exports = module.exports = app;
 
-// REGISTER OUR ROUTES -------------------------------
-// all of our routes will be prefixed with /api
-// app.use('/api', router);
+
+app.listen(port);
+console.log('Magic happens on port ' + port);
+
 
