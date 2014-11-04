@@ -1,7 +1,7 @@
 ##TasteBuds
 
 #####Overview
-TasteBuds is a platform for proclaiming what each user considers to be the best food establish for each given category in New York City. In the current version, a user can add their favorite places to the map, control the view of the map by selecting between categories of food, and search for new places to try using the Foursquare API.
+TasteBuds is a platform for proclaiming what each user considers to be the best food establishment for each given category in New York City. In the current version, a user can add their favorite places to the map, control the view of the map by selecting between categories of food, and search for new places to try using the Foursquare API.
 
 In future versions, users will be able to see their friends favorite places and when opinions differ a user will be able to challenge their friend to try out a new place. If the user can sway their friend's opinion they will be rewarded with badges to show the community that they are a tastemaker.
 

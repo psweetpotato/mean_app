@@ -6,7 +6,6 @@ var Schema = mongoose.Schema,
 var userSchema = new Schema({
   local: {
   id: ObjectId,
-  username: String,
   email: String,
   password: String,
   bests : [{type: mongoose.Schema.ObjectId, ref: 'Best'}]
