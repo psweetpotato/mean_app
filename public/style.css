@@ -11,12 +11,12 @@ body{
   top: 0;
   right: 0;
   width: 25%;
-  height: 45%;
+  height: 50%;
   z-index: 10;
   background-color: #FFE7B8;
   opacity: .8;
 }
 
-#cat {
-  list-style: none;
+#layerUL {
+  list-style-type: none;
 }

@@ -1,7 +1,7 @@
 angular.module('LayerCtrl', [])
   .controller('LayerController', ['$scope', function($scope) {
     $scope.layers = [
-      {name: 'All'},
+      // {name: 'All'},
       {name: 'Bagels'},
       {name: 'Brunch'},
       {name: 'Burger'},
@@ -15,6 +15,8 @@ angular.module('LayerCtrl', [])
       {name: 'Tacos'}
     ];
     $scope.myLayers = $scope.layers[0];
+
+    var categoryLayer = L.layerGroup();
 
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
@@ -39,7 +41,11 @@ angular.module('LayerCtrl', [])
       addAll();
       categoryLayer.addTo(map);
     });
-    var categoryLayer = L.layerGroup();
+
+    $(".overlay").on('click', '#all', function(){
+      categoryLayer.clearLayers(map);
+      addAll();
+    });
 
     $(".overlay").on('click', '#cat', function(){
       categoryLayer.clearLayers(map);

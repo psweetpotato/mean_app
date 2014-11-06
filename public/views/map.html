@@ -23,17 +23,15 @@
 </head>
 <body>
   <div class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
-    <ul>
+    <h1>Pick A Category</h1>
+    <ul id="layerUL">
+      <li id="all">All</li>
+    </ul>
+    <ul id="layerUL">
       <li ng-repeat='layer in layers'>
         <span id="cat">{{layer.name}}</span>
       </li>
     </ul>
-    <span>
-      <select id="catSelector" ng-model="myLayers" ng-options="layer.name for layer in layers" >
-
-        <option value=" <%= myLayers.name %>" ng-model="myLayers" ng-click="change(value);"></option>
-      </select>
-    </span>
     <span>
       <form name="searchWord" ng-controller="SearchCtrl">
         <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
