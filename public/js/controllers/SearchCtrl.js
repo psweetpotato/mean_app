@@ -51,7 +51,7 @@ function SearchCtrl($scope, $http){
       category: 'All', //FIXME hardcoded
       category_id: 0,
       venue_id: venues[number].id,
-      user: "544e939a59630d151c7b59d4"
+      user: req.user._id
     });
       $(this).hide();
   });
