@@ -29,7 +29,6 @@ module.exports = function(app, passport) {
     });
   });
 
-
   app.get('/api/bests', function(req, res) {
     Best.find(function(err, bests) {
       if (err)
@@ -47,7 +46,7 @@ module.exports = function(app, passport) {
       best.category = req.body.category;
       best.category_id = req.body.category_id;
       best.venue_id = req.body.venue_id;
-      best.user.push("544e939a59630d151c7b59d4"); //FIXME currently hardcoded
+      best.user.push(req.user._id);
       best.save(function(err) {
         if (!err) {
           console.log("created");
@@ -164,7 +163,8 @@ module.exports = function(app, passport) {
 
 
   app.get('/map', function(req, res) {
-    res.sendfile('./public/views/index.html');
+    res.sendfile('./public/views/map.html');
+    console.log(req.user._id);
   });
   app.get('/newuser', function(req, res) {
     res.sendfile('./public/views/user.html');
