@@ -24,6 +24,8 @@
 <body>
   <div class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
     <h1>Pick A Category</h1>
+    <strong>id</strong>: <%= user._id %><br>
+
     <ul id="layerUL" class="allOrMe">
       <li id='all'>Theirs</li>
       <li id='user'>Mine</li>
@@ -32,6 +34,7 @@
     <ul id="layerUL">
       <li ng-repeat='layer in layers'>
         <span id="cat">{{layer.name}}</span>
+
       </li>
     </ul>
 
@@ -45,6 +48,7 @@
 
 
 <div id='map'></div>
+
 <script>
 
 L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3oW5H1g92TAGy0hfg';

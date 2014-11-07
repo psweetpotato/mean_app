@@ -1,12 +1,8 @@
-// angular.module('SearchCtrl', [])
-//   .controller('SearchController', ['$scope', '$http', function($scope, $http){
-
-  function SearchCtrl($scope, $http){
+function SearchCtrl($scope, $http){
     var searchAll = L.layerGroup().addTo(map);
     $scope.search = function(){
       searchword = $scope.keywords;
       categoryLayer.clearLayers(map);
-      searchAll.clearLayers(map);
       var CLIENT_ID = 'EDQQDZUP4CDNAVQTBA40QGR5FC5WPEASPLT5RX1B5XFOAGX5';
       var CLIENT_SECRET = 'U4MOAXGON03440H1RK0ZG1NUF11DT3TY24FQXPARVGGBOS4T';
       var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
@@ -39,7 +35,7 @@
           '<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
           venue.name +
           "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
-          .addTo(searchAll);
+          .addTo(categoryLayer);
       }
     });
     $("#map").on('click', '.addBest', function(){
@@ -53,11 +49,11 @@
         address: venues[number].location.address,
         category: 'All', //FIXME hardcoded
         category_id: 0,
-        venue_id: venues[number].id,
-        user: req.user._id
+        venue_id: venues[number].id
+        // user: user._id
       });
         $(this).hide();
     });
   };
   }
-// }]);
+

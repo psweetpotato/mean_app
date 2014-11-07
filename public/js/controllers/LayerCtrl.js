@@ -74,7 +74,7 @@ angular.module('LayerCtrl', [])
       var catText = this.innerText;
       $.get('/api/bests',  function(req, res) {
         for (var i = 0; i < req.length; i++) {
-          if (req[i].user._id == currentUser) {
+          if (req[i].user._id == user._id) {
             var venue = req[i].name;
             var latlng = L.latLng(req[i].lat, req[i].lon);
             var address = req[i].address;
