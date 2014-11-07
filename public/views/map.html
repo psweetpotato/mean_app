@@ -24,22 +24,26 @@
 <body>
   <div class="overlay" ng-app="LayerCtrl" ng-controller="LayerController">
     <h1>Pick A Category</h1>
-    <ul id="layerUL">
-      <li id="all">All</li>
+    <ul id="layerUL" class="allOrMe">
+      <li id='all'>Theirs</li>
+      <li id='user'>Mine</li>
+      <!-- <li id='friends'>Friends</li> -->
     </ul>
     <ul id="layerUL">
       <li ng-repeat='layer in layers'>
         <span id="cat">{{layer.name}}</span>
       </li>
     </ul>
-    <span>
-      <form name="searchWord" ng-controller="SearchCtrl">
-        <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
-        <button type="submit" id="submit" value="Search" ng-click="search();">Search</button>
-      </form>
-    </span>
 
-  </div>
+      <span>
+        <form name="searchWord" ng-controller="SearchCtrl">
+          <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
+          <button type="submit" id="submit" value="Search" ng-click="search();">Search</button>
+        </form>
+      </span>
+    </div>
+
+
 <div id='map'></div>
 <script>
 
@@ -49,6 +53,9 @@ var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5')
 // Credit Foursquare for their wonderful data
 map.attributionControl
     .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
+
 </script>
 </body>
 </html>
+
+

@@ -36,6 +36,7 @@ module.exports = function(app, passport) {
         res.json(bests);
     });
   });
+
   app.post('/api/bests', function(req, res){
     console.log("routes best post");
       var best = new Best();

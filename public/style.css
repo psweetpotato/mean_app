@@ -20,3 +20,9 @@ body{
 #layerUL {
   list-style-type: none;
 }
+
+.allOrMe li{
+display: inline;
+list-style-type: none;
+padding-right: 20px;
+}

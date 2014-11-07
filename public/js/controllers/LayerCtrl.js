@@ -1,7 +1,6 @@
 angular.module('LayerCtrl', [])
-  .controller('LayerController', ['$scope', function($scope) {
+  .controller('LayerController', ['$scope', '$http', function($scope, $http) {
     $scope.layers = [
-      // {name: 'All'},
       {name: 'Bagels'},
       {name: 'Brunch'},
       {name: 'Burger'},
@@ -16,7 +15,7 @@ angular.module('LayerCtrl', [])
     ];
     $scope.myLayers = $scope.layers[0];
 
-    var categoryLayer = L.layerGroup();
+    categoryLayer = L.layerGroup();
 
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
@@ -70,6 +69,29 @@ angular.module('LayerCtrl', [])
         }
       });
     });
+    $(".overlay").on('click', '#user', function(){
+      categoryLayer.clearLayers(map);
+      var catText = this.innerText;
+      $.get('/api/bests',  function(req, res) {
+        for (var i = 0; i < req.length; i++) {
+          if (req[i].user._id == currentUser) {
+            var venue = req[i].name;
+            var latlng = L.latLng(req[i].lat, req[i].lon);
+            var address = req[i].address;
+            var marker = L.marker(latlng, {
+              icon: L.mapbox.marker.icon({
+                'marker-color': '#F9AC6D',
+                'marker-symbol': 'restaurant',
+                'marker-size': 'medium'
+              })
+            })
+              .bindPopup(venue +'<br/>' + address +"<br/>")
+                .addTo(categoryLayer);
+          }
+        }
+      });
+    });
+
   }]);
 
 
