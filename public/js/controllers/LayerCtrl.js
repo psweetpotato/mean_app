@@ -17,6 +17,8 @@ angular.module('LayerCtrl', [])
 
     categoryLayer = L.layerGroup();
 
+    $scope.visible = false;
+
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
         console.log(req);
@@ -70,7 +72,7 @@ angular.module('LayerCtrl', [])
       });
     });
 
-  $(".overlay").on('click', '#user', function(){
+  $(".overlay").on('click', '#mine', function(){
       categoryLayer.clearLayers(map);
       var userid = $('#userId').text();
       $.get('/api/bests',  function(req, res) {

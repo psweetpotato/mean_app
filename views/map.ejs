@@ -27,15 +27,17 @@
 
 
     <ul id="layerUL" class="allOrMe">
-      <span id="userId"><%= user._id %></span>
-      <li id='all'>Theirs</li>
-      <li id='user'>Mine</li>
+      <span id="userId"><%= user._id %></span></br>
+      <li id='all' ng-click='visible = false'>Theirs</li>
+      <li id='mine' ng-click='visible = true'>Mine</li>
       <!-- <li id='friends'>Friends</li> -->
     </ul>
     <ul id="layerUL">
       <li ng-repeat='layer in layers'>
         <span id="cat">{{layer.name}}</span>
-
+        <form ng-show='visible'>
+        <button type="submit" id="submit" class='addBest'value="Add" ng-click="search();">Add</button>
+        </form>
       </li>
     </ul>
 
