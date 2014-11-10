@@ -69,13 +69,14 @@ angular.module('LayerCtrl', [])
         }
       });
     });
-    $(".overlay").on('click', '#user', function(){
+
+  $(".overlay").on('click', '#user', function(){
       categoryLayer.clearLayers(map);
-      var catText = this.innerText;
+      var userid = $('#userId').text();
       $.get('/api/bests',  function(req, res) {
         for (var i = 0; i < req.length; i++) {
-          console.log(user);
-          if (req[i].user._id == user._id) {
+            var thisUser = req[i].user.toString();
+            if (thisUser == userid) {
             var venue = req[i].name;
             var latlng = L.latLng(req[i].lat, req[i].lon);
             var address = req[i].address;

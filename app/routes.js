@@ -39,14 +39,14 @@ module.exports = function(app, passport) {
 
   app.post('/api/bests', function(req, res){
     console.log("routes best post");
-      var best = new Best();
-      best.name = req.body.name;
-      best.lat = req.body.lat;
-      best.lon = req.body.lon;
-      best.address = req.body.address;
-      best.category = req.body.category;
+      var best         = new Best();
+      best.name        = req.body.name;
+      best.lat         = req.body.lat;
+      best.lon         = req.body.lon;
+      best.address     = req.body.address;
+      best.category    = req.body.category;
       best.category_id = req.body.category_id;
-      best.venue_id = req.body.venue_id;
+      best.venue_id    = req.body.venue_id;
       best.user.push(req.user._id);
       best.save(function(err) {
         if (!err) {
@@ -114,7 +114,6 @@ module.exports = function(app, passport) {
     // =====================================
     // show the login form
     app.get('/login', function(req, res) {
-
         // render the page and pass in any flash data if it exists
         res.render('login.ejs', { message: req.flash('loginMessage') });
     });
@@ -164,9 +163,7 @@ module.exports = function(app, passport) {
     res.render('map.ejs', {
       user : req.user
     });
-
-    // res.sendfile('./public/views/map.html');
-    // console.log(req.user._id);
+    console.log(req.user._id);
   });
   app.get('/newuser', function(req, res) {
     res.sendfile('./public/views/user.html');

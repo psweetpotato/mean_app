@@ -50,7 +50,6 @@ function SearchCtrl($scope, $http){
         category: 'All', //FIXME hardcoded
         category_id: 0,
         venue_id: venues[number].id
-        // user: user._id
       });
         $(this).hide();
     });
