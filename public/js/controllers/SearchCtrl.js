@@ -1,5 +1,5 @@
 controllersMod.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-    $scope.results = [];
+  $scope.results = [];
 
     var searchAll = L.layerGroup().addTo(map);
     $scope.search = function(){
