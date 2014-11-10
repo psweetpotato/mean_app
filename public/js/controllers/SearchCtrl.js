@@ -23,11 +23,10 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
           ',' + map.getCenter().lng), function(result, status) {
       if (status !== 'success') return alert('Request to Foursquare failed');
       venues = result.response.venues;
-      for (var i = 0; i < result.response.venues.length; i++) {
-        var venue = result.response.venues[i];
-        console.log(venue);
+      $scope.results = [];
+      for (var i = 0; i < venues.length; i++) {
+        var venue = venues[i];
         $scope.results.push({name: venue.name, address: venue.location.address, lon: venue.location.lng, lat: venue.location.lat, venue_id: venue.id });
-        console.log($scope.results);
         var latlng = L.latLng(venue.location.lat, venue.location.lng);
         var marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
@@ -35,7 +34,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
               'marker-symbol': 'restaurant',
               'marker-size': 'large'
             })
-          })
+        })
         .bindPopup(
           '<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
           venue.name +
