@@ -1,4 +1,6 @@
-function SearchCtrl($scope, $http){
+controllersMod.controller('SearchController', ['$scope', '$http', function($scope, $http) {
+    $scope.results = [];
+
     var searchAll = L.layerGroup().addTo(map);
     $scope.search = function(){
       searchword = $scope.keywords;
@@ -13,6 +15,7 @@ function SearchCtrl($scope, $http){
         '&query='+ searchword +
         '&limit=7'+
         '&callback=?';
+
     $.getJSON(API_ENDPOINT
       .replace('CLIENT_ID', CLIENT_ID)
       .replace('CLIENT_SECRET', CLIENT_SECRET)
@@ -23,6 +26,8 @@ function SearchCtrl($scope, $http){
       for (var i = 0; i < result.response.venues.length; i++) {
         var venue = result.response.venues[i];
         console.log(venue);
+        $scope.results.push({name: venue.name, address: venue.location.address, lon: venue.location.lng, lat: venue.location.lat, venue_id: venue.id });
+        console.log($scope.results);
         var latlng = L.latLng(venue.location.lat, venue.location.lng);
         var marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
@@ -54,5 +59,5 @@ function SearchCtrl($scope, $http){
         $(this).hide();
     });
   };
-  }
+}]);
 

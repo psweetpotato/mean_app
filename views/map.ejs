@@ -23,35 +23,40 @@
 </head>
 <body>
   <div ng-app="LayerCtrl" ng-controller="LayerController">
-    <div class="overlay">
-    <ul id="layerUL" class="allOrMe">
-      <span id="userId"><%= user._id %></span></br>
-      <li id='all' >Theirs</li>
-      <li id='mine' >Mine</li>
-      <!-- <li id='friends'>Friends</li> -->
-    </ul>
-    <ul id="layerUL">
-      <li ng-repeat='layer in layers'>
-        <span class="cat" id=' {{layer.name}} ' ng-click="toggle()">{{layer.name}}</span>
-      </li>
-    </ul>
-
+    <div class="overlay" >
+      <ul id="layerUL" class="allOrMe">
+        <span id="userId"><%= user._id %></span></br>
+          <li id='all' >Theirs</li>
+          <li id='mine' >Mine</li>
+          <!-- <li id='friends'>Friends</li> -->
+      </ul>
+      <ul id="layerUL">
+        <li ng-repeat='layer in layers'>
+          <span class="cat" id=' {{layer.name}} ' ng-click="toggle()">{{layer.name}}</span>
+        </li>
+      </ul>
       <span>
-        <form name="searchWord" ng-controller="SearchCtrl">
+        <form name="searchWord" ng-controller="SearchController">
           <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
           <button type="submit" id="submit" value="Search" ng-click="search();" >Search</button>
         </form>
       </span>
-      </div>
-      <div class="overlay" id="AddDiv" ng-show='visible'>
-        <span>
-        <form name="searchWord" ng-controller="SearchCtrl">
+    </div>
+    <div class="overlay" id="AddDiv" ng-show='visible'>
+      <span ng-controller="SearchController">
+        <form name="searchWord">
           <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
           <button type="submit" id="submit" value="Search" ng-click="search();">Search</button>
         </form>
+        <ul id="resultsUL">
+        <li ng-repeat='result in results'>
+          <span class="result" id=' {{result.name}} ' >{{result.name}}</span></br>
+          <span class="result" id=' {{result.address}} ' >{{result.address}}</span>
+        </li>
+      </ul>
       </span>
-      </div>
     </div>
+  </div>
 
 
 

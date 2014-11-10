@@ -1,4 +1,4 @@
-angular.module('LayerCtrl', [])
+var controllersMod = angular.module('LayerCtrl', [])
   .controller('LayerController', ['$scope', '$http', function($scope, $http) {
     $scope.layers = [
       {name: 'Bagels'},

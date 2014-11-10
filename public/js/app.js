@@ -1,1 +1,1 @@
-var appModule = angular.module('app', ['ngRoute', 'appRoutes', 'UserCtrl', 'UserService', 'BestCtrl', 'BestService'])
+var appModule = angular.module('app', ['ngRoute', 'appRoutes', 'UserCtrl', 'UserService', 'BestCtrl', 'BestService', 'SearchCtrl', 'LayerCtrl'])
