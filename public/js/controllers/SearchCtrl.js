@@ -45,6 +45,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
     $("#map").on('click', '.addBest', function(){
       console.log('clicked!', this);
       var number = $(this).data().venue_id;
+      console.log($(this).data().venue_id);
       console.log(venues[number]);
       var catText = $('#addDivHead').text();
       $http.post('/api/bests',

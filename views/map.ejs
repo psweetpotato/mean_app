@@ -29,19 +29,13 @@
         <span id="userId"><%= user._id %></span></br>
           <div class="AllDiv"><li id='all' >Theirs</li></div>
           <div class="MyDiv"><li id='mine' ng-click='changeOwner();' >Mine</li></div>
-          <!-- <li id='friends'>Friends</li> -->
       </ul>
       <ul id="layerUL" class="layers">
         <li ng-repeat='layer in layers'>
          <span class="cat" id=' {{layer.name}} ' ng-click="toggle()">{{layer.name}}</span>
         </li>
       </ul>
-      <!-- <span>
-        <form name="searchWord" ng-controller="SearchController">
-          <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
-          <button type="submit" id="submit" value="Search" ng-click="search();" >Search</button>
-        </form>
-      </span> -->
+
     </div>
     <div class="CAToverlay" id="AddDiv" ng-show='visible'>
       <span class="fa fa-times fa-lg" id="close" ng-click="close()"></span>
@@ -54,7 +48,7 @@
         </span>
         <p>Or</p>
         <span>Follow a friend's suggestion</span>
-        <ul id="suggestionsUL" >
+        <ul id="suggestionsUL">
         <li ng-repeat='suggestion in suggestions'>
           <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
           <span id='{{suggestion.address}}'>{{suggestion.address}}</span>
@@ -63,21 +57,14 @@
 
     </div>
   </div>
-
-
-
-
 <div id='map'></div>
-
 <script>
-
-L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3oW5H1g92TAGy0hfg';
-var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5')
-    .setView([40.751, -73.985], 13);
-// Credit Foursquare for their wonderful data
-map.attributionControl
-    .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
-
+  L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3oW5H1g92TAGy0hfg';
+  var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5')
+      .setView([40.751, -73.985], 13);
+  // Credit Foursquare for their wonderful data
+  map.attributionControl
+      .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
 </script>
 </body>
 </html>
