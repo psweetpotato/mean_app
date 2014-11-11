@@ -13,10 +13,13 @@ var controllersMod = angular.module('LayerCtrl', [])
       {name: 'Sushi'},
       {name: 'Tacos'}
     ];
+    var sidebar = $('.overlay');
+    var mysidebar = $('.CAToverlay');
+
     $scope.myLayers = $scope.layers[0];
     categoryLayer = L.layerGroup();
-
     $scope.visible = false;
+    $scope.owner = false;
 
     $scope.changeOwner = function(){
       $scope.owner = true;
@@ -59,13 +62,13 @@ var controllersMod = angular.module('LayerCtrl', [])
       categoryLayer.addTo(map);
     });
 
-    $(".overlay").on('click', '#all', function(){
+    sidebar.on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       addAll();
     });
 
 
-      $(".overlay").on('click', '.cat', function(){
+      sidebar.on('click', '.cat', function(){
         if ($scope.owner !== true) {
         categoryLayer.clearLayers(map);
           var catText = this.innerText;
@@ -89,6 +92,7 @@ var controllersMod = angular.module('LayerCtrl', [])
                 }
               };
             });
+
         } else {
           categoryLayer.clearLayers(map);
             var catText = this.innerText;
@@ -105,7 +109,8 @@ var controllersMod = angular.module('LayerCtrl', [])
             });
         }
       });
-  $(".overlay").on('click', '#mine', function(){
+
+  sidebar.on('click', '#mine', function(){
     categoryLayer.clearLayers(map);
     var userid = $('#userId').text();
     $.get('/api/bests',  function(req, res) {
