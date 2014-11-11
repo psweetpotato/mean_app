@@ -46,13 +46,13 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
       console.log('clicked!', this);
       var number = $(this).data().venue_id;
       console.log(venues[number]);
+      var catText = $('#addDivHead').text();
       $http.post('/api/bests',
         {name: venues[number].name,
         lat: venues[number].location.lat,
         lon: venues[number].location.lng,
         address: venues[number].location.address,
-        category: 'All', //FIXME hardcoded
-        category_id: 0,
+        category: catText,
         venue_id: venues[number].id
       });
         $(this).hide();
