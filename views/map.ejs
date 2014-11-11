@@ -28,7 +28,7 @@
       <ul id="layerUL" class="allOrMe">
         <span id="userId"><%= user._id %></span></br>
           <div class="AllDiv"><li id='all' >Theirs</li></div>
-          <div class="MineDiv"><li id='mine' ng-click='changeOwner();' >Mine</li></div>
+          <div class="MyDiv"><li id='mine' ng-click='changeOwner();' >Mine</li></div>
           <!-- <li id='friends'>Friends</li> -->
       </ul>
       <ul id="layerUL" class="layers">
@@ -54,7 +54,7 @@
         </span>
         <p>Or</p>
         <span>Follow a friend's suggestion</span>
-        <ul id="suggestionsUL" ng-controller="LayerController">
+        <ul id="suggestionsUL" >
         <li ng-repeat='suggestion in suggestions'>
           <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
           <span id='{{suggestion.address}}'>{{suggestion.address}}</span>

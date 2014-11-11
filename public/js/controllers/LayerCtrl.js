@@ -40,7 +40,7 @@ var controllersMod = angular.module('LayerCtrl', [])
 
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
-        console.log(req);
+        console.log('number1');
         for (var i = 0; i < req.length; i++) {
           var venue = req[i].name;
           var latlng = L.latLng(req[i].lat, req[i].lon);
@@ -59,12 +59,14 @@ var controllersMod = angular.module('LayerCtrl', [])
     };
     $(map).ready(function() {
       addAll();
+      console.log('call addall');
       categoryLayer.addTo(map);
     });
 
-    sidebar.on('click', '#all', function(){
+    sidebar.on('click', '.AllDiv', function(){
       categoryLayer.clearLayers(map);
       addAll();
+      console.log('call addall 2');
     });
 
 
@@ -75,6 +77,7 @@ var controllersMod = angular.module('LayerCtrl', [])
           console.log(catText);
           console.log($scope.owner);
             $.get('/api/bests',  function(req, res) {
+              console.log('number2');
               for (var i = 0; i < req.length; i++) {
                 if (req[i].category == catText) {
                   var venue = req[i].name;
@@ -97,6 +100,7 @@ var controllersMod = angular.module('LayerCtrl', [])
           categoryLayer.clearLayers(map);
             var catText = this.innerText;
             $.get('/api/bests',  function(req, res) {
+              console.log('number3');
               for (var i = 0; i < req.length; i++) {
                 if (req[i].category == catText) {
                   console.log($scope.owner);
@@ -110,10 +114,11 @@ var controllersMod = angular.module('LayerCtrl', [])
         }
       });
 
-  sidebar.on('click', '#mine', function(){
+  sidebar.on('click', '.MyDiv', function(){
     categoryLayer.clearLayers(map);
     var userid = $('#userId').text();
     $.get('/api/bests',  function(req, res) {
+      console.log('call4');
       for (var i = 0; i < req.length; i++) {
         var thisUser = req[i].user.toString();
         if (thisUser == userid) {
