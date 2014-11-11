@@ -27,7 +27,7 @@
     <div class="overlay" >
       <ul id="layerUL" class="allOrMe">
         <span id="userId"><%= user._id %></span></br>
-          <div class="AllDiv"><li id='all'>Theirs</li></div>
+          <div class="AllDiv"><li id='all' >Theirs</li></div>
           <div class="MineDiv"><li id='mine' ng-click='changeOwner();' >Mine</li></div>
           <!-- <li id='friends'>Friends</li> -->
       </ul>
@@ -44,7 +44,7 @@
       </span> -->
     </div>
     <div class="overlay" id="AddDiv" ng-show='visible'>
-      <span class="fa fa-times fa-lg" id="close" ng-click="toggle()"></span>
+      <span class="fa fa-times fa-lg" id="close" ng-click="close()"></span>
       <h1>Proclaim the best <span id="addDivHead"> catText </span></h1>
       <span ng-controller="SearchController">
         <form name="searchWord">

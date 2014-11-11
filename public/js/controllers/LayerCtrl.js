@@ -19,11 +19,15 @@ var controllersMod = angular.module('LayerCtrl', [])
     $scope.visible = false;
 
     $scope.changeOwner = function(){
-      $scope.owner = "mine";
+      $scope.owner = true;
     };
 
+    $scope.close = function(){
+      $scope.visible = false;
+      $scope.owner = false;
+    };
     $scope.toggle = function() {
-      if ($scope.owner === "mine") {
+      if ($scope.owner === true) {
         $scope.visible = !$scope.visible;
         catText = this.layer.name;
         console.log(catText);
@@ -62,7 +66,7 @@ var controllersMod = angular.module('LayerCtrl', [])
 
 
       $(".overlay").on('click', '.cat', function(){
-        if ($scope.owner !== "mine") {
+        if ($scope.owner !== true) {
         categoryLayer.clearLayers(map);
           var catText = this.innerText;
           console.log(catText);
