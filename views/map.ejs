@@ -27,7 +27,7 @@
       <ul id="layerUL" class="allOrMe">
         <span id="userId"><%= user._id %></span></br>
           <li id='all' >Theirs</li>
-          <li id='mine' >Mine</li>
+          <li id='mine' ng-click='changeOwner();' >Mine</li>
           <!-- <li id='friends'>Friends</li> -->
       </ul>
       <ul id="layerUL">
@@ -43,18 +43,22 @@
       </span>
     </div>
     <div class="overlay" id="AddDiv" ng-show='visible'>
+      <h1>Proclaim the best <span id="addDivHead"> catText </span></h1>
       <span ng-controller="SearchController">
         <form name="searchWord">
-          <input type="text" name="sWord" ng-model="keywords" class="input"><br/>
-          <button type="submit" id="submit" value="Search" ng-click="search();">Search</button>
+          <input type="text" name="sWord" ng-model="keywords" class="input" placeholder="pizza, etc."><br/>
+          <button type="submit" id="submit" value="Search" ng-click="search();">Search the Map</button>
         </form>
-        <ul id="resultsUL">
-        <li ng-repeat='result in results'>
-          <span id='{{result.name}}'>{{result.name}}</span></br>
-          <span id='{{result.address}}'>{{result.address}}</span>
+        </span>
+        <p>Or</p>
+        <span>Follow a friend's suggestion</span>
+        <ul id="suggestionsUL" ng-controller="LayerController">
+        <li ng-repeat='suggestion in suggestions'>
+          <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
+          <span id='{{suggestion.address}}'>{{suggestion.address}}</span>
         </li>
-      </ul>
-      </span>
+        </ul>
+
     </div>
   </div>
 

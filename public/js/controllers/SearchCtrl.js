@@ -1,5 +1,5 @@
 controllersMod.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-  $scope.results = [];
+  // $scope.results = [];
 
     var searchAll = L.layerGroup().addTo(map);
     $scope.search = function(){
@@ -23,10 +23,10 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
           ',' + map.getCenter().lng), function(result, status) {
       if (status !== 'success') return alert('Request to Foursquare failed');
       venues = result.response.venues;
-      $scope.results = [];
       for (var i = 0; i < venues.length; i++) {
         var venue = venues[i];
-        $scope.results.push({name: venue.name, address: venue.location.address, lon: venue.location.lng, lat: venue.location.lat, venue_id: venue.id });
+        // $scope.results = [];
+        // $scope.results.push({name: venue.name, address: venue.location.address, lon: venue.location.lng, lat: venue.location.lat, venue_id: venue.id });
         var latlng = L.latLng(venue.location.lat, venue.location.lng);
         var marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
