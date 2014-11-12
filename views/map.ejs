@@ -7,6 +7,7 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
+    <script type="text/javascript" src="bower_components/angular-ui-utils/ui-utils.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/services/BestService.js"></script>
@@ -40,7 +41,7 @@
     </div>
     <div class="CAToverlay" ng-show='visible'>
       <span class="fa fa-times fa-lg" id="close" ng-click="close()"></span>
-      <h1>Proclaim the Best <span id="addDivHead"> catText </span></h1></br></br>
+      <h1>Who has the best <span id="addDivHead"> catText </span> </br>in New York?</h1></br></br>
       <div id="searchdiv">
       <span ng-controller="SearchController">
         <form name="searchWord">
@@ -53,7 +54,7 @@
         <p id="sug">Take a friend's suggestion</p>
         <div id="suglist">
           <ul id="suggestionsUL">
-            <li id="sugli" ng-repeat='suggestion in suggestions | limitTo:5'
+            <li id="sugli" ng-repeat='suggestion in suggestions | limitTo:5 | unique:"venue_id"'
             ng-click="addSug()">
               <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
               <span id='{{suggestion.address}}'>{{suggestion.address}}</span>
