@@ -29,7 +29,7 @@
       <ul class="allOrMe">
         <span id="userId"><%= user._id %></span></br>
           <div class="AllDiv"><li id='all' >Theirs</li></div>
-          <div class="MyDiv"><li id='mine' ng-click='changeOwner();' >Mine</li></div>
+          <div class="MyDiv" ng-click='changeOwner();'><li id='mine' >Mine</li></div>
       </ul>
       <ul id="layerUL" class="layers">
         <li ng-repeat='layer in layers'>
@@ -38,7 +38,7 @@
       </ul>
 
     </div>
-    <div class="CAToverlay" id="AddDiv" ng-show='visible'>
+    <div class="CAToverlay" ng-show='visible'>
       <span class="fa fa-times fa-lg" id="close" ng-click="close()"></span>
       <h1>Proclaim the Best <span id="addDivHead"> catText </span></h1></br></br>
       <div id="searchdiv">

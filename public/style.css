@@ -14,7 +14,7 @@ body{
   height: 100%;
   z-index: 10;
   background-color: #949291;
-  opacity: .8;
+  /*opacity: .8;*/
 }
 .CAToverlay{
   position: fixed;
@@ -24,7 +24,7 @@ body{
   height: 100%;
   z-index: 10;
   background-color: #949291;
-  opacity: .8;
+  /*opacity: .8;*/
 }
 .AllDiv {
   float: left;
@@ -148,10 +148,6 @@ body{
 
 #userId {
   visibility: hidden;
-}
-
-#AddDiv {
-  opacity: 1;
 }
 
 #resultsUL {
