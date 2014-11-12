@@ -25,8 +25,6 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
       venues = result.response.venues;
       for (var i = 0; i < venues.length; i++) {
         var venue = venues[i];
-        // $scope.results = [];
-        // $scope.results.push({name: venue.name, address: venue.location.address, lon: venue.location.lng, lat: venue.location.lat, venue_id: venue.id });
         var latlng = L.latLng(venue.location.lat, venue.location.lng);
         var marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
@@ -36,7 +34,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
             })
         })
         .bindPopup(
-          '<strong><a href="https://foursquare.com/v/' + venue.id + '">' +
+          '<strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
           venue.name +
           "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
           .addTo(categoryLayer);
