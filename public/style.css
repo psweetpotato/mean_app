@@ -198,3 +198,38 @@ body{
   float: right;
   cursor: pointer;
 }
+h1 {
+  font-family: 'Averia Serif Libre', cursive;
+  font-size: 2em;
+  text-align: center;
+}
+#sug {
+  font-family: 'Averia Serif Libre', cursive;
+  font-size: 2em;
+  text-align: center;
+}
+#searchdiv {
+  width: 50%;
+  margin: 0 auto;
+}
+
+#suglist {
+  width: 200px;
+  margin: 0 auto;
+}
+#suggestionsUL {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+#sugli {
+  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  border-bottom: 1px solid #ccc;
+}
+#sugli:hover {
+  background: #f6f6f6;
+}
+#sugli:last-child; {
+  border: none;
+}

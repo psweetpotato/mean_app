@@ -37,7 +37,41 @@ var controllersMod = angular.module('LayerCtrl', [])
         $('#addDivHead').text(catText);
       }
     };
+    $scope.addSug = function(){
+      console.log(this);
+      var venue = this.suggestion.name;
+        var latlng = L.latLng(this.suggestion.lat, this.suggestion.lon);
+        var address = this.suggestion.address;
+        var id = this.suggestion.venue_id;
+        console.log(this.suggestion);
+        var marker = L.marker(latlng, {
+          icon: L.mapbox.marker.icon({
+            'marker-color': '#F9AC6D',
+            'marker-symbol': 'restaurant',
+            'marker-size': 'medium'
+          })
+         })
+            .bindPopup(
+          '<strong><a href="https://foursquare.com/v/' + this.suggestion.venue_id + '" target="_blank">' +
+          venue +
+          "</a></strong><br/><button class='newSuggestion' id='" + venue + "'>Add</button>")
+          .addTo(categoryLayer);
 
+    };
+    $(map).on('click', '.newSuggestion', function(){
+      console.log('clicked!', this);
+      var number = $(this).data().venue_id;
+      var catText = $('#addDivHead').text();
+      $http.post('/api/bests',
+        {name: venues[number].name,
+        lat: venues[number].location.lat,
+        lon: venues[number].location.lng,
+        address: venues[number].location.address,
+        category: catText,
+        venue_id: venues[number].id
+      });
+        $(this).hide();
+    });
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
         console.log('number1');
@@ -59,7 +93,6 @@ var controllersMod = angular.module('LayerCtrl', [])
     };
     $(map).ready(function() {
       addAll();
-      console.log('call addall');
       categoryLayer.addTo(map);
     });
 
@@ -106,7 +139,7 @@ var controllersMod = angular.module('LayerCtrl', [])
                 if (req[i].category == catText) {
                   console.log($scope.owner);
                   console.log(req[i]);
-                  $scope.suggestions.push({name: req[i].name, address: req[i].address, lon: req[i].lng, lat: req[i].lat, venue_id: req[i].id });
+                  $scope.suggestions.push({name: req[i].name, address: req[i].address, lon: req[i].lon, lat: req[i].lat, venue_id: req[i].venue_id });
                   $scope.$digest();
                 };
               }
