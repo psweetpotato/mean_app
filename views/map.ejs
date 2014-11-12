@@ -7,7 +7,6 @@
     <script src="//cdnjs.cloudflare.com/ajax/libs/angular.js/1.2.20/angular.js"></script>
     <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
     <script src='https://code.jquery.com/jquery-1.11.0.min.js'></script>
-    <script type="text/javascript" src="bower_components/angular-ui-utils/ui-utils.js"></script>
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
     <script src="js/services/BestService.js"></script>
@@ -54,7 +53,7 @@
         <p id="sug">Take a friend's suggestion</p>
         <div id="suglist">
           <ul id="suggestionsUL">
-            <li id="sugli" ng-repeat='suggestion in suggestions | limitTo:5 | unique:"venue_id"'
+            <li id="sugli" ng-repeat='suggestion in suggestions | limitTo:5'
             ng-click="addSug()">
               <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
               <span id='{{suggestion.address}}'>{{suggestion.address}}</span>
