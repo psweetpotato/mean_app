@@ -23,11 +23,13 @@ var controllersMod = angular.module('LayerCtrl', [])
 
     $scope.changeOwner = function(){
       $scope.owner = true;
+      $scope.digest();
     };
 
     $scope.close = function(){
       $scope.visible = false;
       $scope.owner = false;
+      $scope.digest();
     };
     $scope.toggle = function() {
       if ($scope.owner === true) {
@@ -35,6 +37,7 @@ var controllersMod = angular.module('LayerCtrl', [])
         catText = this.layer.name;
         console.log(catText);
         $('#addDivHead').text(catText);
+        $scope.digest();
       }
     };
 
