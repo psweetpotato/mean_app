@@ -101,11 +101,11 @@ var controllersMod = angular.module('LayerCtrl', [])
             var catText = this.innerText;
             $.get('/api/bests',  function(req, res) {
               console.log('number3');
+              $scope.suggestions = [];
               for (var i = 0; i < req.length; i++) {
                 if (req[i].category == catText) {
                   console.log($scope.owner);
                   console.log(req[i]);
-                  $scope.suggestions = [];
                   $scope.suggestions.push({name: req[i].name, address: req[i].address, lon: req[i].lng, lat: req[i].lat, venue_id: req[i].id });
                   $scope.$digest();
                 };

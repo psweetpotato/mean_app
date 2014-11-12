@@ -10,7 +10,7 @@ body{
   position: fixed;
   top: 0;
   right: 0;
-  width: 25%;
+  width: 30%;
   height: 100%;
   z-index: 10;
   background-color: #949291;
@@ -20,7 +20,7 @@ body{
   position: fixed;
   top: 0;
   right: 0;
-  width: 25%;
+  width: 30%;
   height: 100%;
   z-index: 10;
   background-color: #949291;
@@ -28,7 +28,7 @@ body{
 }
 .AllDiv {
   float: left;
-  width: 43%;
+  width: 40%;
   border: black;
   margin-right: 10px;
   padding-left: 10px;
@@ -67,10 +67,11 @@ body{
   text-decoration:none;
   text-align:center;
   text-shadow:1px 1px 0px #ffffff;
+  margin-left: 15px;
 }
 .MyDiv {
   float: right;
-  width: 43%;
+  width: 40%;
   padding-left: 10px;
   margin-right: 10px;
   border: 1px solid black;
@@ -108,6 +109,7 @@ body{
   text-decoration:none;
   text-align:center;
   text-shadow:1px 1px 0px #ffffff;
+  margin-right: 50px;
 }
 .MyDiv:hover {
   background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #dfdfdf), color-stop(1, #ededed) );
@@ -186,10 +188,11 @@ body{
   font-style:normal;
   height:50px;
   line-height:50px;
-  width:100%;
+  width:75%;
   text-decoration:none;
   text-align:center;
   text-shadow:1px 1px 0px #ffffff;
+  margin-right: 40px;
 }
 #close {
   float: right;
