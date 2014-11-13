@@ -1,6 +1,4 @@
 controllersMod.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-  // $scope.results = [];
-
     var searchAll = L.layerGroup().addTo(map);
     $scope.search = function(){
       searchword = $scope.keywords;
