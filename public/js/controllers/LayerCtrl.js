@@ -28,6 +28,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     $scope.close = function(){
       $scope.visible = false;
       $scope.owner = false;
+      addAll();
     };
     $scope.toggle = function() {
       if ($scope.owner === true) {
@@ -39,6 +40,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     };
     $scope.addSug = function(){
       console.log(this);
+      var place = this.suggestion;
       var venue = this.suggestion.name;
         var latlng = L.latLng(this.suggestion.lat, this.suggestion.lon);
         var address = this.suggestion.address;
@@ -54,24 +56,27 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             .bindPopup(
           '<strong><a href="https://foursquare.com/v/' + this.suggestion.venue_id + '" target="_blank">' +
           venue +
-          "</a></strong><br/><button class='newSuggestion' id='" + venue + "'>Add</button>")
+          "</a></strong><br/><button class='addThisSug' data-venue_id='" + place + "' " + " class='" + venue + "'>Add</button>")
           .addTo(categoryLayer);
 
     };
-    $(map).on('click', '.newSuggestion', function(){
+
+    $('#map').on('click', '.addThisSug', function(){
       console.log('clicked!', this);
-      var number = $(this).data().venue_id;
+      var number = $(this).data().name;
+      console.log(number);
       var catText = $('#addDivHead').text();
       $http.post('/api/bests',
-        {name: venues[number].name,
-        lat: venues[number].location.lat,
-        lon: venues[number].location.lng,
+        {name: venue[number].name,
+        lat: venue[number].location.lat,
+        lon: venue[number].location.lng,
         address: venues[number].location.address,
         category: catText,
         venue_id: venues[number].id
       });
         $(this).hide();
     });
+
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
         console.log('number1');
@@ -99,7 +104,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     sidebar.on('click', '.AllDiv', function(){
       categoryLayer.clearLayers(map);
       addAll();
-      console.log('call addall 2');
     });
 
 
@@ -139,7 +143,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
                 if (req[i].category == catText) {
                   console.log($scope.owner);
                   console.log(req[i]);
-                  $scope.suggestions.push({name: req[i].name, address: req[i].address, lon: req[i].lon, lat: req[i].lat, venue_id: req[i].venue_id });
+                  $scope.suggestions.push({name: req[i].name, address: req[i].address, lon: req[i].lon, lat: req[i].lat, venue_id: req[i].venue_id, category: req[i].category});
                   $scope.$digest();
                 };
               }

@@ -28,7 +28,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
             icon: L.mapbox.marker.icon({
               'marker-color': '#F96D6D',
               'marker-symbol': 'restaurant',
-              'marker-size': 'large'
+              'marker-size': 'medium'
             })
         })
         .bindPopup(
