@@ -101,7 +101,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       categoryLayer.addTo(map);
     });
 
-    sidebar.on('click', '.AllDiv', function(){
+    sidebar.on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       addAll();
     });
@@ -151,7 +151,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
         }
       });
 
-  sidebar.on('click', '.MyDiv', function(){
+  sidebar.on('click', '#mine', function(){
     categoryLayer.clearLayers(map);
     var userid = $('#userId').text();
     $.get('/api/bests',  function(req, res) {

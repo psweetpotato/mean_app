@@ -29,6 +29,29 @@ module.exports = function(app, passport) {
     });
   });
 
+  app.get('/api/users/:user_id', function(req, res) {
+    User.findById(req.params.user_id, function(err, user) {
+      console.log(req.params.user_id);
+      if (err)
+        res.send(err);
+        res.json(user);
+    });
+  });
+  app.put('/api/users/:user_id', function(req, res) {
+    User.findById(req.params.user_id, function(err, user){
+      if (err)
+        res.send(err);
+      console.log(req);
+        // user.friends.push(req.user._id);
+        // add all attributes to be updated
+        user.save(function(err){
+          if(err)
+          res.send(err);
+          res.json({message: 'added a friend'});
+        });
+    });
+  });
+
   app.get('/api/bests', function(req, res) {
     Best.find(function(err, bests) {
       if (err)
