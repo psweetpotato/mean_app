@@ -26,18 +26,23 @@
 </head>
 <body>
   <div ng-app="LayerCtrl" ng-controller="LayerController">
-    <div class="overlay" >
-      <ul class="allOrMe">
-        <span id="userId"><%= user._id %></span></br>
-          <div class="AllDiv"><li id='all' >Theirs</li></div>
-          <div class="MyDiv" ng-click='changeOwner();'><li id='mine' >Mine</li></div>
-      </ul>
-      <ul id="layerUL" class="layers">
-        <li ng-repeat='layer in layers'>
-         <span class="cat" id=' {{layer.name}} ' ng-click="toggle()">{{layer.name}}</span>
-        </li>
-      </ul>
 
+    <div class="overlay" >
+      <div class="nav">
+      <span id="userId"><%= user._id %></span>
+      <ul class="allOrMe">
+          <li class="allOrMeli" id='all' >All</li>
+          <li class="allOrMeli" id='friends' >Friends</li>
+          <li ng-click='changeOwner();' class="allOrMeli" id='mine' >Mine</li>
+      </ul>
+      </div>
+      <div id="layerlist">
+        <ul id="layerUL" class="layers">
+          <li ng-repeat='layer in layers'>
+          <span class="cat" id=' {{layer.name}} ' ng-click="toggle()">{{layer.name}}</span>
+          </li>
+        </ul>
+      </div>
     </div>
     <div class="CAToverlay" ng-show='visible'>
       <span class="fa fa-times fa-lg" id="close" ng-click="close()"></span>
@@ -67,11 +72,13 @@
 <div id='map'></div>
 <script>
   L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3oW5H1g92TAGy0hfg';
-  var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5')
+  var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5', { zoomControl: false })
       .setView([40.742, -73.945], 13);
   // Credit Foursquare for their wonderful data
   map.attributionControl
       .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
+
+      new L.Control.Zoom({ position: 'bottomleft' }).addTo(map);
 </script>
 </body>
 </html>
