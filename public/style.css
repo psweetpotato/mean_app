@@ -29,12 +29,13 @@ body{
   padding-right: 200px;
 
 }
-
+#mine {
+  border-left: 1px solid #ccc;
+}
 .allOrMeli{
   margin-top: -15px;
   cursor: pointer;
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
-  border-left: 1px solid #ccc;
   border-right: 1px solid #ccc;
   display: inline-block;
   padding-left: 15px;
@@ -54,25 +55,6 @@ body{
   z-index: 10;
   background-color: #949291;
 }
-
-#layerUL {
-  list-style-type: none;
-  text-align: center;
-  margin: auto;
-}
-.layers {
-  padding-top: 100px;
-}
-
-
-#userId {
-  visibility: hidden;
-}
-
-#resultsUL {
-  list-style-type: none;
-}
-
 #layerlist {
   background-color: #f6f6f6;
   width: 200px;
@@ -85,9 +67,12 @@ body{
 #layerUL {
   cursor: pointer;
   list-style-type: none;
-  margin: 0;
   padding: 0;
   text-align: center;
+  margin: 0 auto;
+}
+.layers {
+  padding-top: 100px;
 }
 .cat {
   font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
@@ -96,9 +81,18 @@ body{
 .cat:hover {
   background: #f6f6f6;
 }
-.cat:last-child; {
-  border: none;
+#Tacos {
+border-bottom: 1px solid #ccc;
 }
+
+#userId {
+  visibility: hidden;
+}
+
+#resultsUL {
+  list-style-type: none;
+}
+
 #close {
   float: right;
   cursor: pointer;
