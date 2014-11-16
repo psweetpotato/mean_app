@@ -68,7 +68,6 @@ module.exports = function(app, passport) {
       best.lon         = req.body.lon;
       best.address     = req.body.address;
       best.category    = req.body.category;
-      best.category_id = req.body.category_id;
       best.venue_id    = req.body.venue_id;
       best.user.push(req.user._id);
       best.save(function(err) {

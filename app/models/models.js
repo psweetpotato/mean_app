@@ -8,7 +8,7 @@ var userSchema = new Schema({
   id: ObjectId,
   email: String,
   password: String,
-  bests : [{type: mongoose.Schema.ObjectId, ref: 'Best'}],
+  // bests : [{type: mongoose.Schema.ObjectId, ref: 'Best'}],
   friends: [{type: mongoose.Schema.ObjectId, ref: 'User'}]
 }
 });
@@ -19,7 +19,6 @@ var bestSchema = mongoose.Schema({
   lon: Number,
   address: String,
   category: String,
-  category_id: Number,
   venue_id: String,
   user : [{ type: mongoose.Schema.ObjectId, ref: 'User' }]
 });
@@ -28,7 +27,6 @@ userSchema.methods.generateHash = function(password) {
     return bcrypt.hashSync(password, bcrypt.genSaltSync(8), null);
 };
 
-// checking if password is valid
 userSchema.methods.validPassword = function(password) {
     return bcrypt.compareSync(password, this.local.password);
 };
