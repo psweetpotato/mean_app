@@ -29,7 +29,6 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
               'marker-color': '#F96D6D',
               'marker-symbol': 'restaurant',
               'marker-size': 'medium'
-              // 'class-name': 'helpme'
             })
         })
         .bindPopup(

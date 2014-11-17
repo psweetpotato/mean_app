@@ -8,7 +8,6 @@ var userSchema = new Schema({
   id: ObjectId,
   email: String,
   password: String,
-  // bests : [{type: mongoose.Schema.ObjectId, ref: 'Best'}],
   friends: [{type: mongoose.Schema.ObjectId, ref: 'User'}]
 }
 });
