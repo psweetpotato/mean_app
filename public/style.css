@@ -27,6 +27,7 @@ body{
   list-style-type: none;
   text-align: center;
   padding-right: 200px;
+  margin-top: 10px;
 
 }
 #mine {
@@ -83,7 +84,7 @@ body{
   background: #f6f6f6;
 }
 #Tacos {
-border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
 }
 
 #userId {
@@ -174,4 +175,18 @@ h1 {
 }
 .input {
   width: 100%;
+}
+#title {
+  float:left;
+  font: 200 25px/1.5 Helvetica, Verdana, sans-serif;
+  padding-left: 25px;
+  margin-top: 15px;
+  color: #f6f6f6;
+  text-decoration: none;
+
+}
+#title:hover; {
+  color: #f6f6f6;
+  text-decoration: none;
+  cursor: pointer;
 }
