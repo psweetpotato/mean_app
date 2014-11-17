@@ -18,6 +18,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
     $scope.myLayers = $scope.layers[0];
     categoryLayer = L.layerGroup();
+    myLayer = L.layerGroup();
     $scope.visible = false;
     $scope.owner = false;
 
@@ -80,7 +81,23 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
         console.log('number1');
+        var userid = $('#userId').text();
         for (var i = 0; i < req.length; i++) {
+          var thisUser = req[i].user.toString();
+          if (thisUser == userid) {
+          var venue = req[i].name;
+          var latlng = L.latLng(req[i].lat, req[i].lon);
+          var address = req[i].address;
+          var marker = L.marker(latlng, {
+            icon: L.mapbox.marker.icon({
+              'marker-color': '#F9AC6D',
+              'marker-symbol': 'restaurant',
+              'marker-size': 'medium'
+            })
+          })
+            .bindPopup(venue +'<br/>' + address +"<br/>")
+              .addTo(myLayer);
+          } else {
           var venue = req[i].name;
           var latlng = L.latLng(req[i].lat, req[i].lon);
           var address = req[i].address;
@@ -93,6 +110,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
           })
             .bindPopup(venue +'<br/>' + address +"<br/>")
               .addTo(categoryLayer);
+          }
         }
       });
     };
@@ -104,6 +122,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     sidebar.on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       addAll();
+      myLayer.clearLayers(map);
     });
 
 
@@ -153,27 +172,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
   sidebar.on('click', '#mine', function(){
     categoryLayer.clearLayers(map);
-    var userid = $('#userId').text();
-    $.get('/api/bests',  function(req, res) {
-      console.log('call4');
-      for (var i = 0; i < req.length; i++) {
-        var thisUser = req[i].user.toString();
-        if (thisUser == userid) {
-          var venue = req[i].name;
-          var latlng = L.latLng(req[i].lat, req[i].lon);
-          var address = req[i].address;
-          var marker = L.marker(latlng, {
-            icon: L.mapbox.marker.icon({
-              'marker-color': '#F9AC6D',
-              'marker-symbol': 'restaurant',
-              'marker-size': 'medium'
-            })
-          })
-            .bindPopup(venue +'<br/>' + address +"<br/>")
-              .addTo(categoryLayer);
-        }
-      }
-    });
+    myLayer.addTo(map);
   });
 
   sidebar.on('click', '#friends', function(){
