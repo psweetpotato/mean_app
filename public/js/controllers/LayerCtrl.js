@@ -180,34 +180,36 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
   sidebar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
-    var userId = $('#userId').text();
-    var url = '/api/users/' + userId;
-    $.get(url,  function(req, res) {
-      console.log(req);
-      var friends = req.local.friends;
-      console.log(friends);
-      for (var i = 0; i < friends.length; i++) {
-        var friendId = friends[i];
-        $.get('/api/bests',  function(req, res) {
-          console.log(req);
 
-          if (friendId) {
-            var venue = req[i].name;
-            var latlng = L.latLng(req[i].lat, req[i].lon);
-            var address = req[i].address;
-            var marker = L.marker(latlng, {
-              icon: L.mapbox.marker.icon({
-                'marker-color': '#F9AC6D',
-                'marker-symbol': 'restaurant',
-                'marker-size': 'medium'
-              })
-            })
-              .bindPopup(venue +'<br/>' + address +"<br/>")
-                .addTo(categoryLayer);
-          }
-        });
-       }
-    });
+    // var userId = $('#userId').text();
+    // var url = '/api/users/' + userId;
+    // $.get(url,  function(req, res) {
+    //   console.log(req);
+    //   var friends = req.local.friends;
+    //   console.log(friends);
+    //   $.get('/api/bests',  function(req, res) {
+    //       console.log(req);
+      // for (var i = 0; i < req.length; i++) {
+      //   var friendId = friends[i];
+
+
+      //     if (friendId) {
+      //       var venue = req[i].name;
+      //       var latlng = L.latLng(req[i].lat, req[i].lon);
+      //       var address = req[i].address;
+      //       var marker = L.marker(latlng, {
+      //         icon: L.mapbox.marker.icon({
+      //           'marker-color': '#F9AC6D',
+      //           'marker-symbol': 'restaurant',
+      //           'marker-size': 'medium'
+      //         })
+      //       })
+      //         .bindPopup(venue +'<br/>' + address +"<br/>")
+      //           .addTo(categoryLayer);
+      //     }
+      //   });
+       // });
+    // });
   });
 
   }]);

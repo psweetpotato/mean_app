@@ -1,4 +1,4 @@
-angular.module('UserService', []).factory('User', ['$http', function($http) {
+controllersMod.factory('User', ['$http', function($http) {
   return {
     get : function() {
       $http.get('/api/users');

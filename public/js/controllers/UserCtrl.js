@@ -1,5 +1,4 @@
-angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 'User',
-  function($scope, $http, User) {
+controllersMod.controller('UserController', ['$scope', '$http', 'User', function($scope, $http, User) {
     this.myForm = {};
     this.myForm.name;
     this.myForm.email;
@@ -11,5 +10,18 @@ angular.module('UserCtrl', []).controller("UserController", ['$scope', '$http', 
       console.log(userData);
       User.create(userData);
     };
-  }
-]);
+
+    $scope.addFriend = function(){
+      var newFriend = $scope.email;
+      $.get('api/users', function(req,res){
+        for (var i = 0; i < req.length; i++) {
+          console.log(req[i]);
+        }
+      });
+      // var userId = $('#userId').text();
+      // var url = '/api/users/' + userId;
+      // $.put(url, function(req, res){
+
+      // });
+    }
+}]);
