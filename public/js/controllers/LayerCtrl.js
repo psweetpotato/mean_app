@@ -134,8 +134,9 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
 
       sidebar.on('click', '.cat', function(){
-        if ($scope.owner !== true) {
         categoryLayer.clearLayers(map);
+        myLayer.clearLayers(map);
+        if ($scope.owner !== true) {
           var catText = this.innerText;
           console.log(catText);
           console.log($scope.owner);
