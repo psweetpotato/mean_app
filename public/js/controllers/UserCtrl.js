@@ -13,15 +13,19 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
 
     $scope.addFriend = function(){
       var newFriend = $scope.email;
+      var userId = $('#userId').text();
+      var url = 'api/users/' + userId;
+      console.log(url);
       $.get('api/users', function(req,res){
         for (var i = 0; i < req.length; i++) {
-          console.log(req[i]);
+          if (req[i].local.email === newFriend){
+            var newFriendId = req[i]._id;
+          }
         }
       });
-      // var userId = $('#userId').text();
-      // var url = '/api/users/' + userId;
-      // $.put(url, function(req, res){
-
-      // });
+      $http.put(url, , function(req, res){
+        console.log(req.friends);
+        // req.friends.push(newFriendId);
+      });
     }
 }]);

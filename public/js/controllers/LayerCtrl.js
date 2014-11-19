@@ -23,7 +23,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     categoryLayer = L.layerGroup();
     myLayer = L.layerGroup();
 
-
     $scope.changeOwner = function(){
       $scope.owner = true;
     };
@@ -180,7 +179,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
   sidebar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
-
     // var userId = $('#userId').text();
     // var url = '/api/users/' + userId;
     // $.get(url,  function(req, res) {
