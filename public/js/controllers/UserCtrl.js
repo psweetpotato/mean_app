@@ -22,10 +22,13 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
             var newFriendId = req[i]._id;
           }
         }
-      });
-      $http.put(url, , function(req, res){
-        console.log(req.friends);
-        // req.friends.push(newFriendId);
-      });
+        $http.put(url, {friends: newFriendId})
+          .success(function(data, status, headers, config) {
+            console.log('success');
+          })
+          .error(function(data, status, headers, config) {
+            console.log('error');
+          });
+        });
     }
 }]);
