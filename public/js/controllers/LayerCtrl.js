@@ -179,8 +179,20 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
   sidebar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
-    // var userId = $('#userId').text();
-    // var url = '/api/users/' + userId;
+    var userId = $('#userId').text();
+    var url = '/api/users/' + userId;
+    $scope.friends = [];
+    $.get(url,  function(req, res) {
+      console.log(req);
+      var friends = req.local.friends;
+      for (var i = 0; i < friends.length; i++) {
+        console.log(friends[i]);
+          $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
+          $scope.$digest();
+      };
+      console.log($scope.friends);
+    });
+
     // $.get(url,  function(req, res) {
     //   console.log(req);
     //   var friends = req.local.friends;
