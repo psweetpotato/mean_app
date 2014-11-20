@@ -34,21 +34,3 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
     }
 }]);
 
-// use later for adding more detailed user data
-
-// $.get('api/users', function(req,res){
-//         for (var i = 0; i < req.length; i++) {
-//           if (req[i].local.email === newFriend){
-//             var newFriendId = req[i]._id;
-//             console.log(req[i]);
-//             var newFriendEmail = req[i].email;
-//           }
-//         };
-//         $http.put(url, {friends: {friendId: newFriendId, email: newFriendEmail}})
-//           .success(function(data, status, headers, config) {
-//             console.log('success');
-//           })
-//           .error(function(data, status, headers, config) {
-//             console.log('error');
-//           });
-//         });
