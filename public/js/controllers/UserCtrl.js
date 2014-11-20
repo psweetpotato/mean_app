@@ -13,6 +13,7 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
 
     $scope.addFriend = function(){
       var newFriend = $scope.email;
+      $scope.email = "";
       var userId = $('#userId').text();
       var url = 'api/users/' + userId;
       console.log(url);
