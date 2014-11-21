@@ -61,7 +61,7 @@ body{
   position: fixed;
   top: 0;
   right: 0;
-  width: 426px;
+  width: 400px;
   height: 100%;
   z-index: 10;
   background-color: #f6f6f6;
@@ -241,4 +241,5 @@ h1 {
 #addFriends {
   width: 50%;
   margin: 0 auto;
+  padding-left: 50px;
 }
