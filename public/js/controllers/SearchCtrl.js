@@ -51,7 +51,8 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
         address: venues[number].location.address,
         category: catText,
         venue_id: venues[number].id
-      });
+        }
+      );
         $(this).hide();
     });
   };

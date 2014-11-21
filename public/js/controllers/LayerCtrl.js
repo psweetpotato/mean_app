@@ -13,7 +13,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       {name: 'Sushi'},
       {name: 'Tacos'}
     ];
-    var sidebar = $('.overlay');
+    var navbar = $('.overlay');
     var mysidebar = $('.CAToverlay');
 
     $scope.myLayers = $scope.layers[0];
@@ -120,45 +120,44 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       categoryLayer.addTo(map);
     });
 
-    sidebar.on('click', '#all', function(){
+    navbar.on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       addAll();
       myLayer.clearLayers(map);
     });
 
-    sidebar.on('click', '#mine', function(){
+    navbar.on('click', '#mine', function(){
       categoryLayer.clearLayers(map);
       myLayer.addTo(map);
     });
 
 
-      sidebar.on('click', '.cat', function(){
+      navbar.on('click', '.cat', function(){
         categoryLayer.clearLayers(map);
         myLayer.clearLayers(map);
         if ($scope.owner !== true) {
           var catText = this.innerText;
           console.log(catText);
           console.log($scope.owner);
-            $.get('/api/bests',  function(req, res) {
-              console.log('number2');
-              for (var i = 0; i < req.length; i++) {
-                if (req[i].category == catText) {
-                  var venue = req[i].name;
-                  var latlng = L.latLng(req[i].lat, req[i].lon);
-                  var address = req[i].address;
-                  var marker = L.marker(latlng, {
-                    icon: L.mapbox.marker.icon({
-                      'marker-color': '#F9AC6D',
-                      'marker-symbol': 'restaurant',
-                      'marker-size': 'medium'
-                    })
+          $.get('/api/bests',  function(req, res) {
+            console.log('number2');
+            for (var i = 0; i < req.length; i++) {
+              if (req[i].category == catText) {
+                var venue = req[i].name;
+                var latlng = L.latLng(req[i].lat, req[i].lon);
+                var address = req[i].address;
+                var marker = L.marker(latlng, {
+                  icon: L.mapbox.marker.icon({
+                    'marker-color': '#F9AC6D',
+                    'marker-symbol': 'restaurant',
+                    'marker-size': 'medium'
                   })
-                    .bindPopup(venue +'<br/>' + address +"<br/>")
-                      .addTo(categoryLayer);
+                })
+                  .bindPopup(venue +'<br/>' + address +"<br/>")
+                    .addTo(categoryLayer);
                 }
               };
             });
-
         } else {
           categoryLayer.clearLayers(map);
             var catText = this.innerText;
@@ -177,7 +176,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
         }
       });
 
-  sidebar.on('click', '#friends', function(){
+  navbar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
     var userId = $('#userId').text();
     var url = '/api/users/' + userId;
@@ -188,7 +187,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       for (var i = 0; i < friends.length; i++) {
         console.log(friends[i]);
           $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
-          $scope.$digest();
+          // $scope.$digest();
       };
       console.log($scope.friends);
     });

@@ -42,7 +42,7 @@ module.exports = function(app, passport) {
       if (err)
         res.send(err);
       var newFriend = req.body.friends;
-      console.log(user);
+      console.log(newFriend);
         user.local.friends.push(newFriend);
         console.log(user.local.friends);
         user.save(function(err){
