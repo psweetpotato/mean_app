@@ -62,7 +62,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
     };
 
-    $('#map').on('click', '.addThisSug', function(){
+    navbar.on('click', '.addThisSug', function(){
       console.log('clicked!', this);
       var number = $(this).data().name;
       console.log(number);
@@ -120,7 +120,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       categoryLayer.addTo(map);
     });
 
-    navbar.on('click', '#all', function(){
+    $(map).on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       addAll();
       myLayer.clearLayers(map);
@@ -130,7 +130,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       categoryLayer.clearLayers(map);
       myLayer.addTo(map);
     });
-
 
       navbar.on('click', '.cat', function(){
         categoryLayer.clearLayers(map);
@@ -187,7 +186,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       for (var i = 0; i < friends.length; i++) {
         console.log(friends[i]);
           $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
-          // $scope.$digest();
+          $scope.$digest();
       };
       console.log($scope.friends);
     });
