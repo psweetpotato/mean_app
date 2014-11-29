@@ -41,10 +41,10 @@ module.exports = function(app, passport) {
     User.findById(req.params.user_id, function(err, user){
       if (err)
         res.send(err);
-      var newFriend = req.body.friends;
+      var newFriend = req.body.following;
       console.log(newFriend);
-        user.local.friends.push(newFriend);
-        console.log(user.local.friends);
+        user.local.following.push(newFriend);
+        console.log(user.local.following);
         user.save(function(err){
           if(err)
           res.send(err);

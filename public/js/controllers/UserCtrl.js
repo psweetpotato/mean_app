@@ -23,7 +23,7 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
             var newFriendId = req[i]._id;
           }
         };
-        $http.put(url, {friends: newFriendId})
+        $http.put(url, {following: newFriendId})
           .success(function(data, status, headers, config) {
             console.log('success');
           })

@@ -8,8 +8,10 @@ var userSchema = new Schema({
   id: ObjectId,
   email: String,
   password: String,
-  friends: [{type: mongoose.Schema.ObjectId, ref: 'User'}]
-}
+  following: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+  followers: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
+  bests: [{type: Number, ref: 'Best'}]
+  }
 });
 
 var bestSchema = mongoose.Schema({

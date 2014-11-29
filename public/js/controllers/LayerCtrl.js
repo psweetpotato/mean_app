@@ -183,7 +183,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     $scope.friends = [];
     $.get(url,  function(req, res) {
       console.log(req);
-      var friends = req.local.friends;
+      var friends = req.local.following;
       for (var i = 0, friendLen = friends.length; i < friendLen; i++) {
         console.log(friends[i]);
           $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
