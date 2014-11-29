@@ -1,8 +1,7 @@
 controllersMod.controller('SearchController', ['$scope', '$http', function($scope, $http) {
-    var searchAll = L.layerGroup().addTo(map);
+    searchLayer = L.layerGroup().addTo(map);
     $scope.search = function(){
       var searchword = $scope.keywords;
-      categoryLayer.clearLayers(map);
       var CLIENT_ID = 'EDQQDZUP4CDNAVQTBA40QGR5FC5WPEASPLT5RX1B5XFOAGX5';
       var CLIENT_SECRET = 'U4MOAXGON03440H1RK0ZG1NUF11DT3TY24FQXPARVGGBOS4T';
       var API_ENDPOINT = 'https://api.foursquare.com/v2/venues/search' +
@@ -35,7 +34,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
           '<strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
           venue.name +
           "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
-          .addTo(categoryLayer);
+          .addTo(searchLayer);
       }
     });
     $("#map").on('click', '.addBest', function(){

@@ -30,6 +30,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       $scope.visible = false;
       $scope.owner = false;
       addAll();
+      searchLayer.clearLayers(map);
     };
     $scope.toggle = function() {
       if ($scope.owner === true) {
