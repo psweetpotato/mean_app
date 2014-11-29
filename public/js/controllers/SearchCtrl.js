@@ -22,9 +22,9 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
       if (status !== 'success') return alert('Request to Foursquare failed');
       venues = result.response.venues;
       for (var i = 0, venueLen = venues.length; i < venueLen; i++) {
-        var venue = venues[i];
-        var latlng = L.latLng(venue.location.lat, venue.location.lng);
-        var marker = L.marker(latlng, {
+        var venue = venues[i],
+          latlng = L.latLng(venue.location.lat, venue.location.lng),
+          marker = L.marker(latlng, {
             icon: L.mapbox.marker.icon({
               'marker-color': '#F96D6D',
               'marker-symbol': 'restaurant',

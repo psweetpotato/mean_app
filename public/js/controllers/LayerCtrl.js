@@ -13,8 +13,8 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       {name: 'Sushi'},
       {name: 'Tacos'}
     ];
-    var navbar = $('.overlay');
-    var mysidebar = $('.CAToverlay');
+    var navbar = $('.overlay'),
+      mysidebar = $('.CAToverlay');
 
     $scope.myLayers = $scope.layers[0];
     $scope.visible = false;
@@ -43,9 +43,9 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       console.log(this);
       var place = this.suggestion;
       var venue = this.suggestion.name;
-        var latlng = L.latLng(this.suggestion.lat, this.suggestion.lon);
-        var address = this.suggestion.address;
-        var id = this.suggestion.venue_id;
+        var latlng = L.latLng(this.suggestion.lat, this.suggestion.lon),
+          address = this.suggestion.address,
+          id = this.suggestion.venue_id;
         console.log(this.suggestion);
         var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
@@ -85,10 +85,10 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
         for (var i = 0, addAllLen = req.length; i < addAllLen; i++) {
           var thisUser = req[i].user.toString();
           if (thisUser == userid) {
-            var venue = req[i].name;
-            var latlng = L.latLng(req[i].lat, req[i].lon);
-            var address = req[i].address;
-            var marker = L.marker(latlng, {
+            var venue = req[i].name,
+              latlng = L.latLng(req[i].lat, req[i].lon),
+              address = req[i].address,
+              marker = L.marker(latlng, {
               icon: L.mapbox.marker.icon({
                 'marker-color': '#F9AC6D',
                 'marker-symbol': 'restaurant',
@@ -98,10 +98,10 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
               .bindPopup(venue +'<br/>' + address +"<br/>")
                 .addTo(myLayer);
           } else {
-            var venue = req[i].name;
-            var latlng = L.latLng(req[i].lat, req[i].lon);
-            var address = req[i].address;
-            var marker = L.marker(latlng, {
+            var venue = req[i].name,
+              latlng = L.latLng(req[i].lat, req[i].lon),
+              address = req[i].address,
+              marker = L.marker(latlng, {
               icon: L.mapbox.marker.icon({
                 'marker-color': '#F9AC6D',
                 'marker-symbol': 'restaurant',
@@ -142,10 +142,10 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             console.log('number2');
             for (var i = 0, catLen = req.length; i < catLen; i++) {
               if (req[i].category == catText) {
-                var venue = req[i].name;
-                var latlng = L.latLng(req[i].lat, req[i].lon);
-                var address = req[i].address;
-                var marker = L.marker(latlng, {
+                var venue = req[i].name,
+                  latlng = L.latLng(req[i].lat, req[i].lon),
+                  address = req[i].address,
+                  marker = L.marker(latlng, {
                   icon: L.mapbox.marker.icon({
                     'marker-color': '#F9AC6D',
                     'marker-symbol': 'restaurant',
