@@ -82,7 +82,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       $.get('/api/bests',  function(req, res) {
         console.log('number1');
         var userid = $('#userId').text();
-        for (var i = 0; i < req.length; i++) {
+        for (var i = 0, addAllLen = req.length; i < addAllLen; i++) {
           var thisUser = req[i].user.toString();
           if (thisUser == userid) {
             var venue = req[i].name;
@@ -140,7 +140,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
           console.log($scope.owner);
           $.get('/api/bests',  function(req, res) {
             console.log('number2');
-            for (var i = 0; i < req.length; i++) {
+            for (var i = 0, catLen = req.length; i < catLen; i++) {
               if (req[i].category == catText) {
                 var venue = req[i].name;
                 var latlng = L.latLng(req[i].lat, req[i].lon);
@@ -163,7 +163,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             $.get('/api/bests',  function(req, res) {
               console.log('number3');
               $scope.suggestions = [];
-              for (var i = 0; i < req.length; i++) {
+              for (var i = 0, sugLen = req.length; i < sugLen; i++) {
                 if (req[i].category == catText) {
                   console.log($scope.owner);
                   console.log(req[i]);
@@ -183,7 +183,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     $.get(url,  function(req, res) {
       console.log(req);
       var friends = req.local.friends;
-      for (var i = 0; i < friends.length; i++) {
+      for (var i = 0, friendLen = friends.length; i < friendLen; i++) {
         console.log(friends[i]);
           $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
           $scope.$digest();

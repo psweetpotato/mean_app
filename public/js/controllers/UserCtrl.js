@@ -18,7 +18,7 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
       var url = 'api/users/' + userId;
       console.log(url);
       $.get('api/users', function(req,res){
-        for (var i = 0; i < req.length; i++) {
+        for (var i = 0, len = req.length; i < len; i++) {
           if (req[i].local.email === newFriend){
             var newFriendId = req[i]._id;
           }

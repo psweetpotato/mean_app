@@ -21,7 +21,7 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
           ',' + map.getCenter().lng), function(result, status) {
       if (status !== 'success') return alert('Request to Foursquare failed');
       venues = result.response.venues;
-      for (var i = 0; i < venues.length; i++) {
+      for (var i = 0, venueLen = venues.length; i < venueLen; i++) {
         var venue = venues[i];
         var latlng = L.latLng(venue.location.lat, venue.location.lng);
         var marker = L.marker(latlng, {
