@@ -38,19 +38,96 @@ module.exports = function(app, passport) {
     });
   });
   app.put('/api/users/:user_id', function(req, res) {
-    User.findById(req.params.user_id, function(err, user){
-      if (err)
-        res.send(err);
-      var newFriend = req.body.following;
-      console.log(newFriend);
-        user.local.following.push(newFriend);
-        console.log(user.local.following);
-        user.save(function(err){
-          if(err)
-          res.send(err);
-          res.json({message: 'added a friend'});
-        });
-    });
+    var currentId = req.params.user_id,
+      newBest = req.body.newBest,
+      catName = req.body.catName
+        switch (catName){
+        case "Bagels":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Bagels': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Brunch":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Brunch': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Burger":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Burger': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Coffee":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Coffee': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Dessert":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Dessert': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Doughnuts":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Doughnuts': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Ice Cream":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.IceCream': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Pizza":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Pizza': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Ramen":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Ramen': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Sushi":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Sushi': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        case "Tacos":
+          User.findByIdAndUpdate(currentId, {$set: {'local.bests.Tacos': newBest}}, function(err, user){
+            console.log(user);
+            if (err)
+              res.send(err);
+          });
+          break;
+        }
+      //var newFriend = req.body.following;
+      //  console.log(newFriend);
+      //  user.local.following.push(newFriend);
+      //  console.log(user.local.following);
+      //var newFollower = req.body.followers;
+      //  console.log(newFollower);
+      //  user.local.followers.push(newFriend);
+      //  console.log(user.local.followers);
   });
 
   app.get('/api/bests', function(req, res) {
