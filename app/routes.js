@@ -38,9 +38,10 @@ module.exports = function(app, passport) {
     });
   });
   app.put('/api/users/:user_id', function(req, res) {
-    var currentId = req.params.user_id,
-      newBest = req.body.newBest,
-      catName = req.body.catName
+    var currentId = req.params.user_id;
+      if (req.body.newBest) {
+      var newBest = req.body.newBest,
+        catName = req.body.catName
         switch (catName){
         case "Bagels":
           User.findByIdAndUpdate(currentId, {$set: {'local.bests.Bagels': newBest}}, function(err, user){
@@ -120,14 +121,19 @@ module.exports = function(app, passport) {
           });
           break;
         }
-      //var newFriend = req.body.following;
-      //  console.log(newFriend);
-      //  user.local.following.push(newFriend);
-      //  console.log(user.local.following);
-      //var newFollower = req.body.followers;
-      //  console.log(newFollower);
-      //  user.local.followers.push(newFriend);
-      //  console.log(user.local.followers);
+      } else if (req.body.following){
+      var newFriend = req.body.following;
+      User.findByIdAndUpdate(currentId, {$push: {'local.following': newFriend}}, function(err, user){
+        console.log(user+" is now following a new user");
+        if (err)
+          res.send(err);
+        });
+      User.findByIdAndUpdate(newFriend, {$push: {'local.followers': currentId}}, function(err, user){
+        console.log(user+" is now being followed by a new user");
+        if (err)
+          res.send(err);
+        });
+      }
   });
 
   app.get('/api/bests', function(req, res) {

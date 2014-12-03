@@ -10,7 +10,6 @@ var userSchema = new Schema({
     password: {type: String, required: true},
     following: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
     followers: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
-  // bests: [{type: Number, ref: 'Best'}]
     bests: {
       Bagels:String,
       Brunch:String,
