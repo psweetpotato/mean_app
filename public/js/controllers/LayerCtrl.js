@@ -183,42 +183,38 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     $scope.friends = [];
     $.get(url,  function(req, res) {
       console.log(req);
-      var friends = req.local.following;
-      for (var i = 0, friendLen = friends.length; i < friendLen; i++) {
-        console.log(friends[i]);
-          $scope.friends.push(friends[i]); //{email: req[i].email, id: req[i].id}
+      var following = req.local.following;
+      for (var i = 0, friendLen = following.length; i < friendLen; i++) {
+        console.log(following[i]);
+          $scope.friends.push(following[i]);
           $scope.$digest();
       };
       console.log($scope.friends);
     });
-
-    // $.get(url,  function(req, res) {
-    //   console.log(req);
-    //   var friends = req.local.friends;
-    //   console.log(friends);
-    //   $.get('/api/bests',  function(req, res) {
-    //       console.log(req);
-      // for (var i = 0; i < req.length; i++) {
-      //   var friendId = friends[i];
-
-
-      //     if (friendId) {
-      //       var venue = req[i].name;
-      //       var latlng = L.latLng(req[i].lat, req[i].lon);
-      //       var address = req[i].address;
-      //       var marker = L.marker(latlng, {
-      //         icon: L.mapbox.marker.icon({
-      //           'marker-color': '#F9AC6D',
-      //           'marker-symbol': 'restaurant',
-      //           'marker-size': 'medium'
-      //         })
-      //       })
-      //         .bindPopup(venue +'<br/>' + address +"<br/>")
-      //           .addTo(categoryLayer);
-      //     }
-      //   });
-       // });
-    // });
+      $.get('/api/bests',  function(req, res) {
+        for (var x = 0, len = $scope.friends.length; x < len; x++){
+          var friendId = $scope.friends[x];
+          for (var i = 0; i < req.length; i++) {
+            console.log(friendId);
+            console.log(req[i].user);
+            if ($.inArray(friendId, req[i].user) != -1) {
+              console.log(friendId);
+              var venue = req[i].name;
+              var latlng = L.latLng(req[i].lat, req[i].lon);
+              var address = req[i].address;
+              var marker = L.marker(latlng, {
+                icon: L.mapbox.marker.icon({
+                  'marker-color': '#F9AC6D',
+                  'marker-symbol': 'restaurant',
+                  'marker-size': 'medium'
+                })
+              })
+                .bindPopup(venue +'<br/>' + address +"<br/>")
+                  .addTo(categoryLayer);
+            }
+          }
+        }
+      });
   });
 
   }]);
