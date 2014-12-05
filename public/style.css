@@ -36,7 +36,8 @@ body{
 .allOrMeli{
   margin-top: -15px;
   cursor: pointer;
-  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  font-family: 'Fauna One', serif;
+  font-size: 20px;
   border-right: 1px solid #ccc;
   display: inline-block;
   padding-left: 15px;
@@ -61,7 +62,7 @@ body{
   position: fixed;
   top: 0;
   right: 0;
-  width: 400px;
+  width: 425px;
   height: 100%;
   z-index: 10;
   background-color: #f6f6f6;
@@ -88,7 +89,8 @@ body{
   padding-top: 100px;
 }
 .cat {
-  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  font-family: 'Fauna One', serif;
+  font-size: 20px;
   border-top: 1px solid #ccc;
 }
 .cat:hover {
@@ -111,12 +113,12 @@ body{
   cursor: pointer;
 }
 h1 {
-  font-family: 'Averia Serif Libre', cursive;
+  font-family: 'Playfair Display SC', serif;
   font-size: 2em;
   text-align: center;
 }
 #sug {
-  font-family: 'Averia Serif Libre', cursive;
+  font-family: 'Playfair Display SC', serif;
   font-size: 2em;
   text-align: center;
 }
@@ -138,7 +140,8 @@ h1 {
   text-align: center;
 }
 #sugli {
-  font: 200 20px/1.5 Helvetica, Verdana, sans-serif;
+  font-family: 'Fauna One', serif;
+  font-size: 16px;
   border-bottom: 1px solid #ccc;
 }
 #sugli:hover {
@@ -188,7 +191,8 @@ h1 {
 }
 #title {
   float:left;
-  font: 200 25px/1.5 Helvetica, Verdana, sans-serif;
+  font-family: 'Playfair Display SC', serif;
+  font-size: 2em;
   padding-left: 25px;
   margin-top: 15px;
   color: #f6f6f6;
