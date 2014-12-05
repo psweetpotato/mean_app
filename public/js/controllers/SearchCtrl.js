@@ -18,25 +18,27 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
       .replace('CLIENT_SECRET', CLIENT_SECRET)
       .replace('LATLON', map.getCenter().lat +
           ',' + map.getCenter().lng), function(result, status) {
-      if (status !== 'success') return alert('Request to Foursquare failed');
-      venues = result.response.venues;
-      for (var i = 0, venueLen = venues.length; i < venueLen; i++) {
-        var venue = venues[i],
-          latlng = L.latLng(venue.location.lat, venue.location.lng),
-          marker = L.marker(latlng, {
-            icon: L.mapbox.marker.icon({
-              'marker-color': '#F96D6D',
-              'marker-symbol': 'restaurant',
-              'marker-size': 'medium'
+        if (status !== 'success') return alert('Request to Foursquare failed');
+          venues = result.response.venues;
+          for (var i = 0, venueLen = venues.length; i < venueLen; i++) {
+            var venue = venues[i],
+            latlng = L.latLng(venue.location.lat, venue.location.lng),
+            marker = L.marker(latlng, {
+              icon: L.mapbox.marker.icon({
+                'marker-color': '#F96D6D',
+                'marker-symbol': 'restaurant',
+                'marker-size': 'medium'
+              })
             })
-        })
-        .bindPopup(
-          '<strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
-          venue.name +
-          "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
-          .addTo(searchLayer);
-      }
-    });
+            .bindPopup(
+              '<strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
+              venue.name +
+              "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
+                .addTo(searchLayer);
+          }
+      });
+    };
+
     $("#map").on('click', '.addBest', function(){
       console.log('clicked!', this);
       var number = $(this).data().venue_id;
@@ -53,7 +55,16 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
         }
       );
         $(this).hide();
+      userId = $('#userId').text();
+      var url = 'api/users/' + userId;
+      console.log(venues[number].id);
+      $http.put(url, {newBest: venues[number].id, catName: catText})
+        .success(function(data, status, headers, config) {
+          console.log('success');
+        })
+        .error(function(data, status, headers, config) {
+          console.log('error');
+        });
     });
-  };
 }]);
 

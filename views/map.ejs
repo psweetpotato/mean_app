@@ -77,7 +77,7 @@
         <span ng-controller="UserController">
           <form name="addingFriends">
             <input type="text" name="friendEmail" ng-model="email" class="inputFriends" placeholder="search by email"><br/></br>
-            <button type="submit" id="submitFriends" value="searchFriends" ng-click="addFriend();">Add Friend</button>
+            <button type="submit" id="submitFriends" value="searchFriends" ng-click="addFriend();">Follow</button>
           </form>
         </span>
       </div>
@@ -88,7 +88,6 @@
   L.mapbox.accessToken = 'pk.eyJ1IjoicHN3ZWV0cG90YXRvIiwiYSI6IjN1eWtxVnMifQ.EPs2g3oW5H1g92TAGy0hfg';
   var map = L.mapbox.map('map', 'psweetpotato.j7cn54e5', { zoomControl: false })
       .setView([40.742, -73.945], 13);
-  // Credit Foursquare for their wonderful data
   map.attributionControl
       .addAttribution('<a href="https://foursquare.com/">Places data from Foursquare</a>');
 
