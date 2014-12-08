@@ -79,6 +79,13 @@
             <input type="text" name="friendEmail" ng-model="email" class="inputFriends" placeholder="search by email"><br/></br>
             <button type="submit" id="submitFriends" value="searchFriends" ng-click="addFriend();">Follow</button>
           </form>
+          <div id="friendslist">
+          <ul id="friendsUL">
+            <li id="friendli" ng-repeat='friend in friends'>
+              <span id='{{friend.email}}'>{{friend}}</span></br>
+            </li>
+          </ul>
+        </div>
         </span>
       </div>
     </div>
