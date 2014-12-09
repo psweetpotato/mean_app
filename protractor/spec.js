@@ -25,6 +25,6 @@ describe('logging in', function() {
     element(by.name('email')).sendKeys('nope@gmail.com');
     element(by.name('password')).sendKeys('nothappening');
     element(by.buttonText('Login')).click();
-    expect(element(by.css("class='alert alert-danger'")).getText()).toMatch('No user found.');
+    expect(element(by.css(".alert alert-danger")).getText()).toEqual('No user found.');
   });
 });
