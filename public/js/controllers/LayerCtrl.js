@@ -206,8 +206,8 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             console.log(req[x]);
             newFriend = [friendId, req[x].local.name];
             $scope.friends.push(newFriend);
+            $scope.$digest();
           }
-          $scope.$digest();
         }
       }
       console.log($scope.friends);
@@ -217,8 +217,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
         for (var x = 0, len = $scope.tempFriends.length; x < len; x++){
           var friendId = $scope.tempFriends[x];
           for (var i = 0; i < req.length; i++) {
-            console.log(friendId);
-            console.log(req[i].user);
             if ($.inArray(friendId, req[i].user) != -1) {
               console.log(friendId);
               var venue = req[i].name;
