@@ -125,17 +125,20 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
     $(map).on('click', '#all', function(){
       categoryLayer.clearLayers(map);
+      friendLayer.clearLayers(map);
       addAll();
       myLayer.clearLayers(map);
     });
 
     navbar.on('click', '#mine', function(){
       categoryLayer.clearLayers(map);
+      friendLayer.clearLayers(map);
       myLayer.addTo(map);
     });
 
       navbar.on('click', '.cat', function(){
         categoryLayer.clearLayers(map);
+        friendLayer.clearLayers(map);
         myLayer.clearLayers(map);
         if ($scope.owner !== true) {
           var catText = this.innerText;
@@ -162,6 +165,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             });
         } else {
           categoryLayer.clearLayers(map);
+          friendLayer.clearLayers(map);
             var catText = this.innerText;
             $.get('/api/bests',  function(req, res) {
               console.log('number3');
@@ -180,6 +184,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
   navbar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
+    friendLayer.clearLayers(map);
     var userId = $('#userId').text();
     var url = '/api/users/' + userId;
     $scope.tempFriends = [];
