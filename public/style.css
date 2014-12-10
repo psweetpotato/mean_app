@@ -67,7 +67,6 @@ body{
   z-index: 10;
   background-color: #f6f6f6;
   margin-top: 68px;
-  padding-right: 9px;
 }
 #layerlist {
   background-color: #f6f6f6;
@@ -109,6 +108,12 @@ body{
 }
 
 #close {
+  padding: 0px;
+  float: right;
+  cursor: pointer;
+}
+#friendsClose {
+  padding: 0px;
   float: right;
   cursor: pointer;
 }
@@ -257,6 +262,7 @@ h1 {
   list-style-type: none;
   margin: 0;
   padding: 0;
+  padding-top: 20px;
   text-align: center;
 }
 #friendli {
