@@ -207,8 +207,8 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
     });
       $.get('/api/bests',  function(req, res) {
-        for (var x = 0, len = $scope.friends.length; x < len; x++){
-          var friendId = $scope.friends[x];
+        for (var x = 0, len = $scope.tempFriends.length; x < len; x++){
+          var friendId = $scope.tempFriends[x];
           for (var i = 0; i < req.length; i++) {
             console.log(friendId);
             console.log(req[i].user);
