@@ -82,7 +82,7 @@
       </div>
       <div id="friendslist">
         <ul id="friendsUL">
-          <li id="friendli" ng-repeat='friend in friends track by $index'>
+          <li id="friendli" ng-repeat='friend in friends track by $index' ng-click="filterFriendsBests()">
             <span class='friendName' id='{{friend.name}}'>{{friend[1]}}</span></br>
           </li>
         </ul>

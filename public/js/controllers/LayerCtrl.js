@@ -22,6 +22,8 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
 
     categoryLayer = L.layerGroup();
     myLayer = L.layerGroup();
+    friendLayer = L.layerGroup();
+
 
     $scope.changeOwner = function(){
       $scope.owner = true;
@@ -232,6 +234,31 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       });
   });
 
+$scope.filterFriendsBests = function (){
+      categoryLayer.clearLayers(map);
+      friendLayer.clearLayers(map);
+      friendLayer.addTo(map);
+      var currentFriend = this.friend[0];
+      console.log(this.friend[0]);
+      $.get('/api/bests',  function(req, res) {
+        for (var i = 0, len = req.length; i < len; i++) {
+          if (req[i].user.toString() === currentFriend) {
+            var venue = req[i].name,
+              latlng = L.latLng(req[i].lat, req[i].lon),
+              address = req[i].address,
+              marker = L.marker(latlng, {
+              icon: L.mapbox.marker.icon({
+                'marker-color': '#F9AC6D',
+                'marker-symbol': 'restaurant',
+                'marker-size': 'medium'
+              })
+          })
+            .bindPopup(venue +'<br/>' + address +"<br/>")
+              .addTo(friendLayer);
+        }
+      }
+    });
+  };
   }]);
 
 

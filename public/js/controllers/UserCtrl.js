@@ -47,5 +47,6 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
           });
       });
     }
+
 }]);
 
