@@ -144,15 +144,15 @@ h1 {
   padding: 0;
   text-align: center;
 }
-#sugli {
+.sugli {
   font-family: 'Fauna One', serif;
   font-size: 16px;
   border-bottom: 1px solid #ccc;
 }
-#sugli:hover {
-  background: #f6f6f6;
+.sugli:hover {
+  background: #949291;
 }
-#sugli:last-child; {
+.sugli:last-child; {
   border: none;
 }
 
@@ -265,9 +265,12 @@ h1 {
   padding-top: 20px;
   text-align: center;
 }
-#friendli {
+.friendli {
   font-family: 'Fauna One', serif;
   font-size: 16px;
   border-bottom: 1px solid #ccc;
+}
+.friendli:hover {
+  background: #949291;
 }
 
