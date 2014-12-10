@@ -189,7 +189,21 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
           $scope.friends.push(following[i]);
           $scope.$digest();
       };
+    });
+    $.get('/api/users', function(req, res){
+      for (var i = 0, len = $scope.friends.length; i < len; i++){
+        var friendId = $scope.friends[i];
+        for (var x = 0, len = req.length; x < len; x++){
+          if (req[x]._id === friendId) {
+            console.log(req[x]);
+            newFriend = [friendId, req[x].local.name];
+            $scope.friends.push(newFriend);
+          }
+          $scope.$digest();
+        }
+      }
       console.log($scope.friends);
+
     });
       $.get('/api/bests',  function(req, res) {
         for (var x = 0, len = $scope.friends.length; x < len; x++){

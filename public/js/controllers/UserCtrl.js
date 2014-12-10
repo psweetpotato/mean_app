@@ -21,6 +21,8 @@ controllersMod.controller('UserController', ['$scope', '$http', 'User', function
         for (var i = 0, len = req.length; i < len; i++) {
           if (req[i].local.email === newFriend){
             var friendId = req[i]._id;
+            console.log("friend request")
+            console.log(req[i]);
           }
         };
 
