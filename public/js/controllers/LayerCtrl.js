@@ -180,19 +180,20 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
     categoryLayer.clearLayers(map);
     var userId = $('#userId').text();
     var url = '/api/users/' + userId;
-    $scope.friends = [];
+    $scope.tempFriends = [];
     $.get(url,  function(req, res) {
       console.log(req);
       var following = req.local.following;
       for (var i = 0, friendLen = following.length; i < friendLen; i++) {
         console.log(following[i]);
-          $scope.friends.push(following[i]);
+          $scope.tempFriends.push(following[i]);
           $scope.$digest();
       };
     });
     $.get('/api/users', function(req, res){
-      for (var i = 0, len = $scope.friends.length; i < len; i++){
-        var friendId = $scope.friends[i];
+      $scope.friends = [];
+      for (var i = 0, len = $scope.tempFriends.length; i < len; i++){
+        var friendId = $scope.tempFriends[i];
         for (var x = 0, len = req.length; x < len; x++){
           if (req[x]._id === friendId) {
             console.log(req[x]);
