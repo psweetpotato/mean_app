@@ -6,6 +6,7 @@ var Schema = mongoose.Schema,
 var userSchema = new Schema({
   local: {
     id: ObjectId,
+    name:String,
     email: {type: String, unique: true, required: true},
     password: {type: String, required: true},
     following: [{type: mongoose.Schema.ObjectId, ref: 'User'}],
@@ -33,7 +34,7 @@ var bestSchema = mongoose.Schema({
   address: String,
   category: String,
   venue_id: String,
-  user : [{ type: mongoose.Schema.ObjectId, ref: 'User'}]
+  user : [{ type: mongoose.Schema.ObjectId, ref: 'User', name:String}]
 });
 
 userSchema.methods.generateHash = function(password) {

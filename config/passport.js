@@ -33,12 +33,14 @@ module.exports = function(passport) {
     // by default, if there was no name, it would just be called 'local'
 
     passport.use('local-signup', new LocalStrategy({
+        // nameField : 'name',
         usernameField : 'email',
         passwordField : 'password',
         passReqToCallback : true // allows us to pass back the entire request to the callback
     },
     function(req, email, password, done) {
-
+        name = req.body.name;
+        console.log(name);
         // asynchronous
         // User.findOne wont fire unless data is sent back
         process.nextTick(function() {
@@ -60,6 +62,7 @@ module.exports = function(passport) {
                 var newUser            = new User();
 
                 // set the user's local credentials
+                newUser.local.name    = name;
                 newUser.local.email    = email;
                 newUser.local.password = newUser.generateHash(password);
 
