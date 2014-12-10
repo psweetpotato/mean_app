@@ -247,3 +247,21 @@ h1 {
   margin: 0 auto;
   padding-left: 50px;
 }
+#friendslist {
+  width: 200px;
+  margin: 0 auto;
+}
+
+#friendsUL {
+  /*cursor: pointer;*/
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+#friendli {
+  font-family: 'Fauna One', serif;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+}
+
