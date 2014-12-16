@@ -5,11 +5,15 @@ body{
 #map{
   position:absolute; top:0; bottom:0; width:100%;
 }
+
+#userId {
+  visibility: hidden;
+}
 .nav {
   background-color: #949291;
   padding-bottom: 15px;
 }
-.overlay {
+.maindiv {
   top: 0;
   margin-left: 0 auto;
   margin-right: 0 auto;
@@ -19,11 +23,19 @@ body{
   box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) !important;
   -moz-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) !important;
   -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) !important;
-/* -moz-transition: all 0.2s ease-in-out;
-    -webkit-transition: all 0.2s ease-in-out;
-    transition: all 0.2s ease-in-out;*/
 }
-.allOrMe {
+.overlay{
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 425px;
+  height: 100%;
+  z-index: 10;
+  background-color: #f6f6f6;
+  margin-top: 68px;
+}
+
+.navOptions {
   list-style-type: none;
   text-align: center;
   padding-right: 200px;
@@ -33,7 +45,7 @@ body{
 #mine {
   border-left: 1px solid #ccc;
 }
-.allOrMeli{
+.navOptionsli{
   margin-top: -15px;
   cursor: pointer;
   font-family: 'Fauna One', serif;
@@ -44,30 +56,10 @@ body{
   padding-right: 15px;
   float: right;
 }
-.allOrMeli:hover{
+.navOptionsli:hover{
   background: #f6f6f6;
 }
 
-.CAToverlay{
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 426px;
-  height: 100%;
-  z-index: 10;
-  background-color: #f6f6f6;
-  margin-top: 68px;
-}
-.friendsOverlay{
-  position: fixed;
-  top: 0;
-  right: 0;
-  width: 425px;
-  height: 100%;
-  z-index: 10;
-  background-color: #f6f6f6;
-  margin-top: 68px;
-}
 #layerlist {
   background-color: #f6f6f6;
   width: 200px;
@@ -99,30 +91,18 @@ body{
   border-bottom: 1px solid #ccc;
 }
 
-#userId {
-  visibility: hidden;
-}
 
 #resultsUL {
   list-style-type: none;
 }
 
-#close {
+.fa-times {
   padding: 0px;
   float: right;
   cursor: pointer;
 }
-#friendsClose {
-  padding: 0px;
-  float: right;
-  cursor: pointer;
-}
+
 h1 {
-  font-family: 'Playfair Display SC', serif;
-  font-size: 24px;
-  text-align: center;
-}
-#sug {
   font-family: 'Playfair Display SC', serif;
   font-size: 24px;
   text-align: center;
@@ -156,7 +136,7 @@ h1 {
   border: none;
 }
 
-#submit {
+.submit {
   -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
   -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
   box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -209,44 +189,7 @@ h1 {
   text-decoration: none;
   cursor: pointer;
 }
-#submitFriends {
-  -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
-  -webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
-  box-shadow:inset 0px 1px 0px 0px #ffffff;
-  background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #ededed), color-stop(1, #dfdfdf) );
-  background:-moz-linear-gradient( center top, #ededed 5%, #dfdfdf 100% );
-  filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ededed', endColorstr='#dfdfdf');
-  background-color:#ededed;
-  -webkit-border-top-left-radius:6px;
-  -moz-border-radius-topleft:6px;
-  border-top-left-radius:6px;
-  -webkit-border-top-right-radius:6px;
-  -moz-border-radius-topright:6px;
-  border-top-right-radius:6px;
-  -webkit-border-bottom-right-radius:6px;
-  -moz-border-radius-bottomright:6px;
-  border-bottom-right-radius:6px;
-  -webkit-border-bottom-left-radius:6px;
-  -moz-border-radius-bottomleft:6px;
-  border-bottom-left-radius:6px;
-  text-indent:0;
-  border:1px solid #dcdcdc;
-  display:inline-block;
-  color:#777777;
-  font-family:arial;
-  font-size:15px;
-  font-weight:bold;
-  font-style:normal;
-  height:25px;
-  line-height:25px;
-  width:75%;
-  text-decoration:none;
-  text-align:center;
-  text-shadow:1px 1px 0px #ffffff;
-}
-.inputFriends {
-  width: 75%;
-}
+
 #addFriends {
   width: 50%;
   margin: 0 auto;
@@ -265,12 +208,12 @@ h1 {
   padding-top: 20px;
   text-align: center;
 }
-.friendli {
+ #friendsUL li {
   font-family: 'Fauna One', serif;
   font-size: 16px;
   border-bottom: 1px solid #ccc;
 }
-.friendli:hover {
+#friendsUL li:hover {
   background: #949291;
 }
 

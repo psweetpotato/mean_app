@@ -9,6 +9,7 @@ var passport       = require('passport');
 var cookieParser   = require('cookie-parser');
 var session        = require('express-session');
 var morgan         = require('morgan');
+
 // configuration ===========================================
 
 // config files
@@ -34,7 +35,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // override with the X-HTTP-Method-Override header in the request. simulate DELETE/PUT
 app.use(methodOverride('X-HTTP-Method-Override'));
-
+// compling sass into css
+// var srcPath = __dirname + '/public/sass';
+// var destPath = __dirname + '/public/styles';
+// app.use(
+//   sassMiddleware({
+//       src: srcPath
+//     , dest: destPath
+//     , debug: true
+//     , outputStyle: 'compressed'
+//     , prefix: '/styles'
+//   }));
 // set the static files location /public/img will be /img for users
 app.use(express.static(__dirname + '/public'));
 
