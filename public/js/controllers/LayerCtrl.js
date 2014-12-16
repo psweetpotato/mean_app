@@ -92,6 +92,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
               .error(function(data, status, headers, config) {
             console.log('error');
               });
+          break;
         }
       }
     });
