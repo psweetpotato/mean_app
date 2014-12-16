@@ -31,9 +31,9 @@ controllersMod.controller('SearchController', ['$scope', '$http', function($scop
               })
             })
             .bindPopup(
-              '<strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
+              '<span ng-controller="SearchController"><strong><a href="https://foursquare.com/v/' + venue.id + '" target="_blank">' +
               venue.name +
-              "</a></strong><br/><button class='addBest' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button>")
+              "</a></strong><br/><button class='addBest' ng-click='addBest()' data-venue_id='" + i + "' " + " class='" + venue.name + "'>Add</button></span>")
                 .addTo(searchLayer);
           }
       });
