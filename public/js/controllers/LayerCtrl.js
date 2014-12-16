@@ -13,8 +13,8 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       {name: 'Sushi'},
       {name: 'Tacos'}
     ];
-    var navbar = $('.overlay'),
-      mysidebar = $('.CAToverlay');
+    var navbar = $('.maindiv'),
+      mysidebar = $('.overlay');
 
     $scope.myLayers = $scope.layers[0];
     $scope.visible = false;
@@ -43,13 +43,12 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       }
     };
     $scope.addSug = function(){
-      console.log(this);
-      var place = this.suggestion;
+      console.log(this.suggestion.venue_id);
+      var place = this.suggestion.venue_id;
       var venue = this.suggestion.name;
         var latlng = L.latLng(this.suggestion.lat, this.suggestion.lon),
           address = this.suggestion.address,
           id = this.suggestion.venue_id;
-        console.log(this.suggestion);
         var marker = L.marker(latlng, {
           icon: L.mapbox.marker.icon({
             'marker-color': '#F9AC6D',
@@ -58,29 +57,44 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
           })
          })
             .bindPopup(
-          '<strong><a href="https://foursquare.com/v/' + this.suggestion.venue_id + '" target="_blank">' +
+          '<span ng-controller="LayerController"><strong><a href="https://foursquare.com/v/' + this.suggestion.venue_id + '" target="_blank">' +
           venue +
-          "</a></strong><br/><button class='addThisSug' data-venue_id='" + place + "' " + " class='" + venue + "'>Add</button>")
+          "</a></strong><br/><button class='addSug' ng-click='addBest()' data-venue_id='" + place + "' " + " class='" + venue + "'>Add</button></span>")
           .addTo(categoryLayer);
 
     };
-
-    navbar.on('click', '.addThisSug', function(){
+    $("#map").on('click', '.addSug', function(){
       console.log('clicked!', this);
-      var number = $(this).data().name;
-      console.log(number);
+      userId = $('#userId').text();
       var catText = $('#addDivHead').text();
-      $http.post('/api/bests',
-        {name: venue[number].name,
-        lat: venue[number].location.lat,
-        lon: venue[number].location.lng,
-        address: venues[number].location.address,
-        category: catText,
-        venue_id: venues[number].id
-      });
-        $(this).hide();
+      var number = $(this).data().venue_id.toString();
+      console.log($(this).data().venue_id);
+      console.log($scope.suggestions);
+      for (var i = 0, sugLen = $scope.suggestions.length; i < sugLen; i ++){
+        if ($scope.suggestions[i].venue_id === number){
+          var selectedSug = $scope.suggestions[i];
+          $http.post('/api/bests',
+            {name: selectedSug.name,
+            lat: selectedSug.lat,
+            lon: selectedSug.lon,
+            address: selectedSug.address,
+            category: catText,
+            venue_id: selectedSug.venue_id,
+            user: userId
+            }
+          );
+          $(this).hide();
+            var url = 'api/users/' + userId;
+            $http.put(url, {newBest: selectedSug.venue_id, catName: catText})
+              .success(function(data, status, headers, config) {
+            console.log('success');
+              })
+              .error(function(data, status, headers, config) {
+            console.log('error');
+              });
+        }
+      }
     });
-
     var addAll = function(){
       $.get('/api/bests',  function(req, res) {
         console.log('number1');
@@ -123,7 +137,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       categoryLayer.addTo(map);
     });
 
-    $(map).on('click', '#all', function(){
+    navbar.on('click', '#all', function(){
       categoryLayer.clearLayers(map);
       friendLayer.clearLayers(map);
       addAll();
@@ -203,8 +217,12 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
         var friendId = $scope.tempFriends[i];
         for (var x = 0, len = req.length; x < len; x++){
           if (req[x]._id === friendId) {
-            console.log(req[x]);
+            console.log(req[x].local);
+            if (req[x].local.name) {
             newFriend = [friendId, req[x].local.name];
+          } else {
+            newFriend = [friendId,req[x].local.email];
+          }
             $scope.friends.push(newFriend);
             $scope.$digest();
           }
