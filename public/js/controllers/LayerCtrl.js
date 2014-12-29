@@ -13,6 +13,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       {name: 'Sushi'},
       {name: 'Tacos'}
     ];
+    $scope.bests = [];
     var navbar = $('.maindiv'),
       mysidebar = $('.overlay');
 
@@ -72,25 +73,22 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
       console.log($scope.suggestions);
       for (var i = 0, sugLen = $scope.suggestions.length; i < sugLen; i ++){
         if ($scope.suggestions[i].venue_id === number){
-          var selectedSug = $scope.suggestions[i];
-          $http.post('/api/bests',
-            {name: selectedSug.name,
-            lat: selectedSug.lat,
-            lon: selectedSug.lon,
-            address: selectedSug.address,
-            category: catText,
-            venue_id: selectedSug.venue_id,
-            user: userId
-            }
-          );
+          var selectedSug = $scope.suggestions[i].venue_id;
+          $http.put('/api/bests/'+number, {user: userId})
+            .success(function(data, status, headers, config) {
+              console.log('success');
+            })
+            .error(function(data, status, headers, config) {
+              console.log('error');
+              });
           $(this).hide();
             var url = 'api/users/' + userId;
             $http.put(url, {newBest: selectedSug.venue_id, catName: catText})
               .success(function(data, status, headers, config) {
-            console.log('success');
+                console.log('success');
               })
               .error(function(data, status, headers, config) {
-            console.log('error');
+                console.log('error');
               });
           break;
         }
@@ -115,6 +113,12 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
             })
               .bindPopup(venue +'<br/>' + address +"<br/>")
                 .addTo(myLayer);
+                $scope.bests.push({name: venue, add: address, cat:req[i].category})
+              // $scope.bests.push([venue, address, req[i].category]);
+              $scope.bests.sort(function(a, b) {
+                return a.cat > b.cat ? 1 : -1;
+              });
+              console.log($scope.bests);
           } else {
             var venue = req[i].name,
               latlng = L.latLng(req[i].lat, req[i].lon),

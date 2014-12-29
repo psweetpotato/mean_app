@@ -38,7 +38,7 @@ body{
 .navOptions {
   list-style-type: none;
   text-align: center;
-  padding-right: 200px;
+  padding-right: 75px;
   margin-top: 10px;
 
 }
@@ -46,7 +46,7 @@ body{
   border-left: 1px solid #ccc;
 }
 .navOptionsli{
-  margin-top: -15px;
+  /*margin-top: -15px;*/
   cursor: pointer;
   font-family: 'Fauna One', serif;
   font-size: 20px;
@@ -57,27 +57,31 @@ body{
   float: right;
 }
 .navOptionsli:hover{
-  background: #f6f6f6;
+  background: #949291;
 }
 
 #layerlist {
   background-color: #f6f6f6;
-  width: 200px;
+  width: 600px;
   padding-top: 20px;
   padding-bottom: 20px;
-  margin: 0 auto;
+  margin: 15px;
   float: right;
+  border-radius: 10px;
 }
 
 #layerUL {
   cursor: pointer;
   list-style-type: none;
-  padding: 0;
-  text-align: center;
-  margin: 0 auto;
+  text-align: left;
 }
-.layers {
+#mybests {
+  float: right;
+  padding-top: 70px;
+}
+#layerdiv {
   padding-top: 100px;
+  float: left;
 }
 .cat {
   font-family: 'Fauna One', serif;
@@ -90,7 +94,6 @@ body{
 #Tacos {
   border-bottom: 1px solid #ccc;
 }
-
 
 #resultsUL {
   list-style-type: none;
@@ -216,4 +219,5 @@ h1 {
 #friendsUL li:hover {
   background: #949291;
 }
+
 
