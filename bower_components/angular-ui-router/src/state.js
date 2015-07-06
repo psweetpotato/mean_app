@@ -68,7 +68,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     ownParams: function(state) {
       var params = state.url && state.url.params || new $$UMFP.ParamSet();
       forEach(state.params || {}, function(config, id) {
-        if (!params[id]) params[id] = new $$UMFP.Param(id, null, config, false);
+        if (!params[id]) params[id] = new $$UMFP.Param(id, null, config, "config");
       });
       return params;
     },
@@ -194,7 +194,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     if (!state[abstractKey] && state.url) {
       $urlRouterProvider.when(state.url, ['$match', '$stateParams', function ($match, $stateParams) {
         if ($state.$current.navigable != state || !equalForKeys($match, $stateParams)) {
-          $state.transitionTo(state, $match, { location: false });
+          $state.transitionTo(state, $match, { inherit: true, location: false });
         }
       }]);
     }
@@ -215,6 +215,13 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     var globSegments = glob.split('.'),
         segments = $state.$current.name.split('.');
 
+    //match single stars
+    for (var i = 0, l = globSegments.length; i < l; i++) {
+      if (globSegments[i] === '*') {
+        segments[i] = '*';
+      }
+    }
+
     //match greedy starts
     if (globSegments[0] === '**') {
        segments = segments.slice(indexOf(segments, globSegments[1]));
@@ -228,13 +235,6 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
     if (globSegments.length != segments.length) {
       return false;
-    }
-
-    //match single stars
-    for (var i = 0, l = globSegments.length; i < l; i++) {
-      if (globSegments[i] === '*') {
-        segments[i] = '*';
-      }
     }
 
     return segments.join('') === globSegments.join('');
@@ -367,9 +367,12 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * Registers a state configuration under a given state name. The stateConfig object
    * has the following acceptable properties.
    *
+   * @param {string} name A unique state name, e.g. "home", "about", "contacts".
+   * To create a parent/child state use a dot, e.g. "about.sales", "home.newest".
+   * @param {object} stateConfig State configuration object.
+   * @param {string|function=} stateConfig.template
    * <a id='template'></a>
-   *
-   * - **`template`** - {string|function=} - html template as a string or a function that returns
+   *   html template as a string or a function that returns
    *   an html template as a string which should be used by the uiView directives. This property 
    *   takes precedence over templateUrl.
    *   
@@ -378,9 +381,17 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   - {array.&lt;object&gt;} - state parameters extracted from the current $location.path() by
    *     applying the current state
    *
+   * <pre>template:
+   *   "<h1>inline template definition</h1>" +
+   *   "<div ui-view></div>"</pre>
+   * <pre>template: function(params) {
+   *       return "<h1>generated template</h1>"; }</pre>
+   * </div>
+   *
+   * @param {string|function=} stateConfig.templateUrl
    * <a id='templateUrl'></a>
    *
-   * - **`templateUrl`** - {string|function=} - path or function that returns a path to an html 
+   *   path or function that returns a path to an html
    *   template that should be used by uiView.
    *   
    *   If `templateUrl` is a function, it will be called with the following parameters:
@@ -388,84 +399,261 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   - {array.&lt;object&gt;} - state parameters extracted from the current $location.path() by 
    *     applying the current state
    *
+   * <pre>templateUrl: "home.html"</pre>
+   * <pre>templateUrl: function(params) {
+   *     return myTemplates[params.pageId]; }</pre>
+   *
+   * @param {function=} stateConfig.templateProvider
    * <a id='templateProvider'></a>
+   *    Provider function that returns HTML content string.
+   * <pre> templateProvider:
+   *       function(MyTemplateService, params) {
+   *         return MyTemplateService.getTemplate(params.pageId);
+   *       }</pre>
    *
-   * - **`templateProvider`** - {function=} - Provider function that returns HTML content
-   *   string.
-   *
+   * @param {string|function=} stateConfig.controller
    * <a id='controller'></a>
    *
-   * - **`controller`** - {string|function=} -  Controller fn that should be associated with newly 
+   *  Controller fn that should be associated with newly
    *   related scope or the name of a registered controller if passed as a string.
+   *   Optionally, the ControllerAs may be declared here.
+   * <pre>controller: "MyRegisteredController"</pre>
+   * <pre>controller:
+   *     "MyRegisteredController as fooCtrl"}</pre>
+   * <pre>controller: function($scope, MyService) {
+   *     $scope.data = MyService.getData(); }</pre>
    *
+   * @param {function=} stateConfig.controllerProvider
    * <a id='controllerProvider'></a>
    *
-   * - **`controllerProvider`** - {function=} - Injectable provider function that returns
-   *   the actual controller or string.
+   * Injectable provider function that returns the actual controller or string.
+   * <pre>controllerProvider:
+   *   function(MyResolveData) {
+   *     if (MyResolveData.foo)
+   *       return "FooCtrl"
+   *     else if (MyResolveData.bar)
+   *       return "BarCtrl";
+   *     else return function($scope) {
+   *       $scope.baz = "Qux";
+   *     }
+   *   }</pre>
    *
+   * @param {string=} stateConfig.controllerAs
    * <a id='controllerAs'></a>
    * 
-   * - **`controllerAs`** – {string=} – A controller alias name. If present the controller will be 
+   * A controller alias name. If present the controller will be
    *   published to scope under the controllerAs name.
+   * <pre>controllerAs: "myCtrl"</pre>
    *
+   * @param {string|object=} stateConfig.parent
+   * <a id='parent'></a>
+   * Optionally specifies the parent state of this state.
+   *
+   * <pre>parent: 'parentState'</pre>
+   * <pre>parent: parentState // JS variable</pre>
+   *
+   * @param {object=} stateConfig.resolve
    * <a id='resolve'></a>
    *
-   * - **`resolve`** - {object.&lt;string, function&gt;=} - An optional map of dependencies which 
+   * An optional map&lt;string, function&gt; of dependencies which
    *   should be injected into the controller. If any of these dependencies are promises, 
-   *   the router will wait for them all to be resolved or one to be rejected before the 
-   *   controller is instantiated. If all the promises are resolved successfully, the values 
-   *   of the resolved promises are injected and $stateChangeSuccess event is fired. If any 
-   *   of the promises are rejected the $stateChangeError event is fired. The map object is:
+   *   the router will wait for them all to be resolved before the controller is instantiated.
+   *   If all the promises are resolved successfully, the $stateChangeSuccess event is fired
+   *   and the values of the resolved promises are injected into any controllers that reference them.
+   *   If any  of the promises are rejected the $stateChangeError event is fired.
+   *
+   *   The map object is:
    *   
    *   - key - {string}: name of dependency to be injected into controller
    *   - factory - {string|function}: If string then it is alias for service. Otherwise if function, 
    *     it is injected and return value it treated as dependency. If result is a promise, it is 
    *     resolved before its value is injected into controller.
    *
+   * <pre>resolve: {
+   *     myResolve1:
+   *       function($http, $stateParams) {
+   *         return $http.get("/api/foos/"+stateParams.fooID);
+   *       }
+   *     }</pre>
+   *
+   * @param {string=} stateConfig.url
    * <a id='url'></a>
    *
-   * - **`url`** - {string=} - A url with optional parameters. When a state is navigated or
+   *   A url fragment with optional parameters. When a state is navigated or
    *   transitioned to, the `$stateParams` service will be populated with any 
    *   parameters that were passed.
    *
-   * <a id='params'></a>
+   *   (See {@link ui.router.util.type:UrlMatcher UrlMatcher} `UrlMatcher`} for
+   *   more details on acceptable patterns )
    *
-   * - **`params`** - {object=} - An array of parameter names or regular expressions. Only 
-   *   use this within a state if you are not using url. Otherwise you can specify your
-   *   parameters within the url. When a state is navigated or transitioned to, the 
-   *   $stateParams service will be populated with any parameters that were passed.
+   * examples:
+   * <pre>url: "/home"
+   * url: "/users/:userid"
+   * url: "/books/{bookid:[a-zA-Z_-]}"
+   * url: "/books/{categoryid:int}"
+   * url: "/books/{publishername:string}/{categoryid:int}"
+   * url: "/messages?before&after"
+   * url: "/messages?{before:date}&{after:date}"
+   * url: "/messages/:mailboxid?{before:date}&{after:date}"
+   * </pre>
    *
+   * @param {object=} stateConfig.views
    * <a id='views'></a>
+   * an optional map&lt;string, object&gt; which defined multiple views, or targets views
+   * manually/explicitly.
    *
-   * - **`views`** - {object=} - Use the views property to set up multiple views or to target views
-   *   manually/explicitly.
+   * Examples:
    *
+   * Targets three named `ui-view`s in the parent state's template
+   * <pre>views: {
+   *     header: {
+   *       controller: "headerCtrl",
+   *       templateUrl: "header.html"
+   *     }, body: {
+   *       controller: "bodyCtrl",
+   *       templateUrl: "body.html"
+   *     }, footer: {
+   *       controller: "footCtrl",
+   *       templateUrl: "footer.html"
+   *     }
+   *   }</pre>
+   *
+   * Targets named `ui-view="header"` from grandparent state 'top''s template, and named `ui-view="body" from parent state's template.
+   * <pre>views: {
+   *     'header@top': {
+   *       controller: "msgHeaderCtrl",
+   *       templateUrl: "msgHeader.html"
+   *     }, 'body': {
+   *       controller: "messagesCtrl",
+   *       templateUrl: "messages.html"
+   *     }
+   *   }</pre>
+   *
+   * @param {boolean=} [stateConfig.abstract=false]
    * <a id='abstract'></a>
-   *
-   * - **`abstract`** - {boolean=} - An abstract state will never be directly activated, 
+   * An abstract state will never be directly activated,
    *   but can provide inherited properties to its common children states.
+   * <pre>abstract: true</pre>
    *
+   * @param {function=} stateConfig.onEnter
    * <a id='onEnter'></a>
    *
-   * - **`onEnter`** - {object=} - Callback function for when a state is entered. Good way
+   * Callback function for when a state is entered. Good way
    *   to trigger an action or dispatch an event, such as opening a dialog.
-   * If minifying your scripts, make sure to use the `['injection1', 'injection2', function(injection1, injection2){}]` syntax.
+   * If minifying your scripts, make sure to explictly annotate this function,
+   * because it won't be automatically annotated by your build tools.
    *
+   * <pre>onEnter: function(MyService, $stateParams) {
+   *     MyService.foo($stateParams.myParam);
+   * }</pre>
+   *
+   * @param {function=} stateConfig.onExit
    * <a id='onExit'></a>
    *
-   * - **`onExit`** - {object=} - Callback function for when a state is exited. Good way to
+   * Callback function for when a state is exited. Good way to
    *   trigger an action or dispatch an event, such as opening a dialog.
-   * If minifying your scripts, make sure to use the `['injection1', 'injection2', function(injection1, injection2){}]` syntax.
+   * If minifying your scripts, make sure to explictly annotate this function,
+   * because it won't be automatically annotated by your build tools.
    *
+   * <pre>onExit: function(MyService, $stateParams) {
+   *     MyService.cleanup($stateParams.myParam);
+   * }</pre>
+   *
+   * @param {boolean=} [stateConfig.reloadOnSearch=true]
    * <a id='reloadOnSearch'></a>
    *
-   * - **`reloadOnSearch = true`** - {boolean=} - If `false`, will not retrigger the same state 
+   * If `false`, will not retrigger the same state
    *   just because a search/query parameter has changed (via $location.search() or $location.hash()). 
    *   Useful for when you'd like to modify $location.search() without triggering a reload.
+   * <pre>reloadOnSearch: false</pre>
    *
+   * @param {object=} stateConfig.data
    * <a id='data'></a>
    *
-   * - **`data`** - {object=} - Arbitrary data object, useful for custom configuration.
+   * Arbitrary data object, useful for custom configuration.  The parent state's `data` is
+   *   prototypally inherited.  In other words, adding a data property to a state adds it to
+   *   the entire subtree via prototypal inheritance.
+   *
+   * <pre>data: {
+   *     requiredRole: 'foo'
+   * } </pre>
+   *
+   * @param {object=} stateConfig.params
+   * <a id='params'></a>
+   *
+   * A map which optionally configures parameters declared in the `url`, or
+   *   defines additional non-url parameters.  For each parameter being
+   *   configured, add a configuration object keyed to the name of the parameter.
+   *
+   *   Each parameter configuration object may contain the following properties:
+   *
+   *   - ** value ** - {object|function=}: specifies the default value for this
+   *     parameter.  This implicitly sets this parameter as optional.
+   *
+   *     When UI-Router routes to a state and no value is
+   *     specified for this parameter in the URL or transition, the
+   *     default value will be used instead.  If `value` is a function,
+   *     it will be injected and invoked, and the return value used.
+   *
+   *     *Note*: `undefined` is treated as "no default value" while `null`
+   *     is treated as "the default value is `null`".
+   *
+   *     *Shorthand*: If you only need to configure the default value of the
+   *     parameter, you may use a shorthand syntax.   In the **`params`**
+   *     map, instead mapping the param name to a full parameter configuration
+   *     object, simply set map it to the default parameter value, e.g.:
+   *
+   * <pre>// define a parameter's default value
+   * params: {
+   *     param1: { value: "defaultValue" }
+   * }
+   * // shorthand default values
+   * params: {
+   *     param1: "defaultValue",
+   *     param2: "param2Default"
+   * }</pre>
+   *
+   *   - ** array ** - {boolean=}: *(default: false)* If true, the param value will be
+   *     treated as an array of values.  If you specified a Type, the value will be
+   *     treated as an array of the specified Type.  Note: query parameter values
+   *     default to a special `"auto"` mode.
+   *
+   *     For query parameters in `"auto"` mode, if multiple  values for a single parameter
+   *     are present in the URL (e.g.: `/foo?bar=1&bar=2&bar=3`) then the values
+   *     are mapped to an array (e.g.: `{ foo: [ '1', '2', '3' ] }`).  However, if
+   *     only one value is present (e.g.: `/foo?bar=1`) then the value is treated as single
+   *     value (e.g.: `{ foo: '1' }`).
+   *
+   * <pre>params: {
+   *     param1: { array: true }
+   * }</pre>
+   *
+   *   - ** squash ** - {bool|string=}: `squash` configures how a default parameter value is represented in the URL when
+   *     the current parameter value is the same as the default value. If `squash` is not set, it uses the
+   *     configured default squash policy.
+   *     (See {@link ui.router.util.$urlMatcherFactory#methods_defaultSquashPolicy `defaultSquashPolicy()`})
+   *
+   *   There are three squash settings:
+   *
+   *     - false: The parameter's default value is not squashed.  It is encoded and included in the URL
+   *     - true: The parameter's default value is omitted from the URL.  If the parameter is preceeded and followed
+   *       by slashes in the state's `url` declaration, then one of those slashes are omitted.
+   *       This can allow for cleaner looking URLs.
+   *     - `"<arbitrary string>"`: The parameter's default value is replaced with an arbitrary placeholder of  your choice.
+   *
+   * <pre>params: {
+   *     param1: {
+   *       value: "defaultId",
+   *       squash: true
+   * } }
+   * // squash "defaultValue" to "~"
+   * params: {
+   *     param1: {
+   *       value: "defaultValue",
+   *       squash: "~"
+   * } }
+   * </pre>
+   *
    *
    * @example
    * <pre>
@@ -474,7 +662,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    * // stateName can be a single top-level name (must be unique).
    * $stateProvider.state("home", {});
    *
-   * // Or it can be a nested state name. This state is a child of the 
+   * // Or it can be a nested state name. This state is a child of the
    * // above "home" state.
    * $stateProvider.state("home.newest", {});
    *
@@ -488,9 +676,6 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
    *   .state("contacts", {});
    * </pre>
    *
-   * @param {string} name A unique state name, e.g. "home", "about", "contacts". 
-   * To create a parent/child state use a dot, e.g. "about.sales", "home.newest".
-   * @param {object} definition State configuration object.
    */
   this.state = state;
   function state(name, definition) {
@@ -614,8 +799,8 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * @methodOf ui.router.state.$state
      *
      * @description
-     * A method that force reloads the current state. All resolves are re-resolved, events are not re-fired, 
-     * and controllers reinstantiated (bug with controllers reinstantiating right now, fixing soon).
+     * A method that force reloads the current state. All resolves are re-resolved,
+     * controllers reinstantiated, and events re-fired.
      *
      * @example
      * <pre>
@@ -635,11 +820,33 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * });
      * </pre>
      *
+     * @param {string=|object=} state - A state name or a state object, which is the root of the resolves to be re-resolved.
+     * @example
+     * <pre>
+     * //assuming app application consists of 3 states: 'contacts', 'contacts.detail', 'contacts.detail.item' 
+     * //and current state is 'contacts.detail.item'
+     * var app angular.module('app', ['ui.router']);
+     *
+     * app.controller('ctrl', function ($scope, $state) {
+     *   $scope.reload = function(){
+     *     //will reload 'contact.detail' and 'contact.detail.item' states
+     *     $state.reload('contact.detail');
+     *   }
+     * });
+     * </pre>
+     *
+     * `reload()` is just an alias for:
+     * <pre>
+     * $state.transitionTo($state.current, $stateParams, { 
+     *   reload: true, inherit: false, notify: true
+     * });
+     * </pre>
+
      * @returns {promise} A promise representing the state of the new transition. See
      * {@link ui.router.state.$state#methods_go $state.go}.
      */
-    $state.reload = function reload() {
-      return $state.transitionTo($state.current, $stateParams, { reload: true, inherit: false, notify: true });
+    $state.reload = function reload(state) {
+      return $state.transitionTo($state.current, $stateParams, { reload: state || true, inherit: false, notify: true});
     };
 
     /**
@@ -743,9 +950,11 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
      * - **`relative`** - {object=}, When transitioning with relative path (e.g '^'), 
      *    defines which state to be relative from.
      * - **`notify`** - {boolean=true}, If `true` will broadcast $stateChangeStart and $stateChangeSuccess events.
-     * - **`reload`** (v0.2.5) - {boolean=false}, If `true` will force transition even if the state or params 
+     * - **`reload`** (v0.2.5) - {boolean=false|string=|object=}, If `true` will force transition even if the state or params 
      *    have not changed, aka a reload of the same state. It differs from reloadOnSearch because you'd
      *    use this when you want to force a reload when *everything* is the same, including search params.
+     *    if String, then will reload the state with the name given in reload, and any children.
+     *    if Object, then a stateObj is expected, will reload the state found in stateObj, and any children.
      *
      * @returns {promise} A promise representing the state of the new transition. See
      * {@link ui.router.state.$state#methods_go $state.go}.
@@ -758,6 +967,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
       var from = $state.$current, fromParams = $state.params, fromPath = from.path;
       var evt, toState = findState(to, options.relative);
+
+      // Store the hash param for later (since it will be stripped out by various methods)
+      var hash = toParams['#'];
 
       if (!isDefined(toState)) {
         var redirect = { to: to, toParams: toParams, options: options };
@@ -797,6 +1009,21 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
           keep++;
           state = toPath[keep];
         }
+      } else if (isString(options.reload) || isObject(options.reload)) {
+        if (isObject(options.reload) && !options.reload.name) {
+          throw new Error('Invalid reload state object');
+        }
+        
+        var reloadState = options.reload === true ? fromPath[0] : findState(options.reload);
+        if (options.reload && !reloadState) {
+          throw new Error("No such reload state '" + (isString(options.reload) ? options.reload : options.reload.name) + "'");
+        }
+
+        while (state && state === fromPath[keep] && state !== reloadState) {
+          locals = toLocals[keep] = state.locals;
+          keep++;
+          state = toPath[keep];
+        }
       }
 
       // If we're going to the same state and all locals are kept, we've got nothing to do.
@@ -804,8 +1031,16 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       // TODO: We may not want to bump 'transition' if we're called from a location change
       // that we've initiated ourselves, because we might accidentally abort a legitimate
       // transition initiated from code?
-      if (shouldTriggerReload(to, from, locals, options)) {
-        if (to.self.reloadOnSearch !== false) $urlRouter.update();
+      if (shouldSkipReload(to, toParams, from, fromParams, locals, options)) {
+        if (hash) toParams['#'] = hash;
+        $state.params = toParams;
+        copy($state.params, $stateParams);
+        if (options.location && to.navigable && to.navigable.url) {
+          $urlRouter.push(to.navigable.url, toParams, {
+            $$avoidResync: true, replace: options.location === 'replace'
+          });
+          $urlRouter.update(true);
+        }
         $state.transition = null;
         return $q.when($state.current);
       }
@@ -843,6 +1078,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
          * </pre>
          */
         if ($rootScope.$broadcast('$stateChangeStart', to.self, toParams, from.self, fromParams).defaultPrevented) {
+          $rootScope.$broadcast('$stateChangeCancel', to.self, toParams, from.self, fromParams);
           $urlRouter.update();
           return TransitionPrevented;
         }
@@ -889,6 +1125,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
           }
         }
 
+        // Re-add the saved hash before we start returning things
+        if (hash) toParams['#'] = hash;
+
         // Run it again, to catch any transitions in callbacks
         if ($state.transition !== transition) return TransitionSuperseded;
 
@@ -901,7 +1140,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
 
         if (options.location && to.navigable) {
           $urlRouter.push(to.navigable.url, to.navigable.locals.globals.$stateParams, {
-            replace: options.location === 'replace'
+            $$avoidResync: true, replace: options.location === 'replace'
           });
         }
 
@@ -997,15 +1236,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       options = extend({ relative: $state.$current }, options || {});
       var state = findState(stateOrName, options.relative);
 
-      if (!isDefined(state)) {
-        return undefined;
-      }
-
-      if ($state.$current !== state) {
-        return false;
-      }
-
-      return isDefined(params) && params !== null ? angular.equals($stateParams, params) : true;
+      if (!isDefined(state)) { return undefined; }
+      if ($state.$current !== state) { return false; }
+      return params ? equalForKeys(state.params.$$values(params), $stateParams) : true;
     };
 
     /**
@@ -1069,13 +1302,9 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       }
 
       var state = findState(stateOrName, options.relative);
-      if (!isDefined(state)) {
-        return undefined;
-      }
-      if (!isDefined($state.$current.includes[state.name])) {
-        return false;
-      }
-      return equalForKeys(params, $stateParams);
+      if (!isDefined(state)) { return undefined; }
+      if (!isDefined($state.$current.includes[state.name])) { return false; }
+      return params ? equalForKeys(state.params.$$values(params), $stateParams, objectKeys(params)) : true;
     };
 
 
@@ -1124,7 +1353,7 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       if (!nav || nav.url === undefined || nav.url === null) {
         return null;
       }
-      return $urlRouter.href(nav.url, filterByKeys(state.params.$$keys(), params || {}), {
+      return $urlRouter.href(nav.url, filterByKeys(state.params.$$keys().concat('#'), params || {}), {
         absolute: options.absolute
       });
     };
@@ -1166,30 +1395,38 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
       })];
       if (inherited) promises.push(inherited);
 
-      // Resolve template and dependencies for all views.
-      forEach(state.views, function (view, name) {
-        var injectables = (view.resolve && view.resolve !== state.resolve ? view.resolve : {});
-        injectables.$template = [ function () {
-          return $view.load(name, { view: view, locals: locals, params: $stateParams, notify: options.notify }) || '';
-        }];
+      function resolveViews() {
+        var viewsPromises = [];
 
-        promises.push($resolve.resolve(injectables, locals, dst.resolve, state).then(function (result) {
-          // References to the controller (only instantiated at link time)
-          if (isFunction(view.controllerProvider) || isArray(view.controllerProvider)) {
-            var injectLocals = angular.extend({}, injectables, locals);
-            result.$$controller = $injector.invoke(view.controllerProvider, null, injectLocals);
-          } else {
-            result.$$controller = view.controller;
-          }
-          // Provide access to the state itself for internal use
-          result.$$state = state;
-          result.$$controllerAs = view.controllerAs;
-          dst[name] = result;
-        }));
-      });
+        // Resolve template and dependencies for all views.
+        forEach(state.views, function (view, name) {
+          var injectables = (view.resolve && view.resolve !== state.resolve ? view.resolve : {});
+          injectables.$template = [ function () {
+            return $view.load(name, { view: view, locals: dst.globals, params: $stateParams, notify: options.notify }) || '';
+          }];
+
+          viewsPromises.push($resolve.resolve(injectables, dst.globals, dst.resolve, state).then(function (result) {
+            // References to the controller (only instantiated at link time)
+            if (isFunction(view.controllerProvider) || isArray(view.controllerProvider)) {
+              var injectLocals = angular.extend({}, injectables, dst.globals);
+              result.$$controller = $injector.invoke(view.controllerProvider, null, injectLocals);
+            } else {
+              result.$$controller = view.controller;
+            }
+            // Provide access to the state itself for internal use
+            result.$$state = state;
+            result.$$controllerAs = view.controllerAs;
+            dst[name] = result;
+          }));
+        });
+
+        return $q.all(viewsPromises).then(function(){
+          return dst.globals;
+        });
+      }
 
       // Wait for all the promises and then return the activation object
-      return $q.all(promises).then(function (values) {
+      return $q.all(promises).then(resolveViews).then(function (values) {
         return dst;
       });
     }
@@ -1197,8 +1434,27 @@ function $StateProvider(   $urlRouterProvider,   $urlMatcherFactory) {
     return $state;
   }
 
-  function shouldTriggerReload(to, from, locals, options) {
-    if (to === from && ((locals === from.locals && !options.reload) || (to.self.reloadOnSearch === false))) {
+  function shouldSkipReload(to, toParams, from, fromParams, locals, options) {
+    // Return true if there are no differences in non-search (path/object) params, false if there are differences
+    function nonSearchParamsEqual(fromAndToState, fromParams, toParams) {
+      // Identify whether all the parameters that differ between `fromParams` and `toParams` were search params.
+      function notSearchParam(key) {
+        return fromAndToState.params[key].location != "search";
+      }
+      var nonQueryParamKeys = fromAndToState.params.$$keys().filter(notSearchParam);
+      var nonQueryParams = pick.apply({}, [fromAndToState.params].concat(nonQueryParamKeys));
+      var nonQueryParamSet = new $$UMFP.ParamSet(nonQueryParams);
+      return nonQueryParamSet.$$equals(fromParams, toParams);
+    }
+
+    // If reload was not explicitly requested
+    // and we're transitioning to the same state we're already in
+    // and    the locals didn't change
+    //     or they changed in a way that doesn't merit reloading
+    //        (reloadOnParams:false, or reloadOnSearch.false and only search params changed)
+    // Then return true.
+    if (!options.reload && to === from &&
+      (locals === from.locals || (to.self.reloadOnSearch === false && nonSearchParamsEqual(from, fromParams, toParams)))) {
       return true;
     }
   }

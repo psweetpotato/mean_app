@@ -78,7 +78,7 @@ function stateContext(el) {
  */
 $StateRefDirective.$inject = ['$state', '$timeout'];
 function $StateRefDirective($state, $timeout) {
-  var allowedOptions = ['location', 'inherit', 'reload'];
+  var allowedOptions = ['location', 'inherit', 'reload', 'absolute'];
 
   return {
     restrict: 'A',
@@ -86,9 +86,12 @@ function $StateRefDirective($state, $timeout) {
     link: function(scope, element, attrs, uiSrefActive) {
       var ref = parseStateRef(attrs.uiSref, $state.current.name);
       var params = null, url = null, base = stateContext(element) || $state.$current;
-      var newHref = null, isAnchor = element.prop("tagName") === "A";
+      // SVGAElement does not use the href attribute, but rather the 'xlinkHref' attribute.
+      var hrefKind = Object.prototype.toString.call(element.prop('href')) === '[object SVGAnimatedString]' ?
+                 'xlink:href' : 'href';
+      var newHref = null, isAnchor = element.prop("tagName").toUpperCase() === "A";
       var isForm = element[0].nodeName === "FORM";
-      var attr = isForm ? "action" : "href", nav = true;
+      var attr = isForm ? "action" : hrefKind, nav = true;
 
       var options = { relative: base, inherit: true };
       var optionsOverride = scope.$eval(attrs.uiSrefOpts) || {};
@@ -107,7 +110,7 @@ function $StateRefDirective($state, $timeout) {
 
         var activeDirective = uiSrefActive[1] || uiSrefActive[0];
         if (activeDirective) {
-          activeDirective.$$setStateInfo(ref.state, params);
+          activeDirective.$$addStateInfo(ref.state, params);
         }
         if (newHref === null) {
           nav = false;
@@ -225,18 +228,24 @@ $StateRefActiveDirective.$inject = ['$state', '$stateParams', '$interpolate'];
 function $StateRefActiveDirective($state, $stateParams, $interpolate) {
   return  {
     restrict: "A",
-    controller: ['$scope', '$element', '$attrs', function ($scope, $element, $attrs) {
-      var state, params, activeClass;
+    controller: ['$scope', '$element', '$attrs', '$timeout', function ($scope, $element, $attrs, $timeout) {
+      var states = [], activeClass, activeEqClass;
 
       // There probably isn't much point in $observing this
       // uiSrefActive and uiSrefActiveEq share the same directive object with some
       // slight difference in logic routing
-      activeClass = $interpolate($attrs.uiSrefActiveEq || $attrs.uiSrefActive || '', false)($scope);
+      activeClass = $interpolate($attrs.uiSrefActive || '', false)($scope);
+      activeEqClass = $interpolate($attrs.uiSrefActiveEq || '', false)($scope);
 
       // Allow uiSref to communicate with uiSrefActive[Equals]
-      this.$$setStateInfo = function (newState, newParams) {
-        state = $state.get(newState, stateContext($element));
-        params = newParams;
+      this.$$addStateInfo = function (newState, newParams) {
+        var state = $state.get(newState, stateContext($element));
+
+        states.push({
+          state: state || { name: newState },
+          params: newParams
+        });
+
         update();
       };
 
@@ -244,24 +253,29 @@ function $StateRefActiveDirective($state, $stateParams, $interpolate) {
 
       // Update route state
       function update() {
-        if (isMatch()) {
-          $element.addClass(activeClass);
-        } else {
-          $element.removeClass(activeClass);
+        for (var i = 0; i < states.length; i++) {
+          if (anyMatch(states[i].state, states[i].params)) {
+            addClass($element, activeClass);
+          } else {
+            removeClass($element, activeClass);
+          }
+
+          if (exactMatch(states[i].state, states[i].params)) {
+            addClass($element, activeEqClass);
+          } else {
+            removeClass($element, activeEqClass);
+          }
         }
       }
 
-      function isMatch() {
-        if (typeof $attrs.uiSrefActiveEq !== 'undefined') {
-          return $state.$current.self === state && matchesParams();
-        } else {
-          return state && $state.includes(state.name) && matchesParams();
-        }
-      }
+      function addClass(el, className) { $timeout(function () { el.addClass(className); }); }
 
-      function matchesParams() {
-        return !params || equalForKeys(params, $stateParams);
-      }
+      function removeClass(el, className) { el.removeClass(className); }
+
+      function anyMatch(state, params) { return $state.includes(state.name, params); }
+
+      function exactMatch(state, params) { return $state.is(state.name, params); }
+
     }]
   };
 }

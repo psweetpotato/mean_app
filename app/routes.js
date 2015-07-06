@@ -178,7 +178,7 @@ module.exports = function(app, passport) {
 
   app.get('/api/bests/:id', function(req, res) {
     Best.findById(req.params.id, function(err, best) {
-      console.log(req.params.id);
+      console.log(req.params.id+"current best");
       if (err)
         res.send(err);
         res.json(best);
@@ -186,17 +186,25 @@ module.exports = function(app, passport) {
   });
 
   app.put('/api/bests/:id', function(req, res) {
-    Best.findById(req.params.id, function(err, best){
-      if (err)
-        res.send(err);
-        best.name = req.body.name;
-        // add all attributes to be updated
-        best.save(function(err){
-          if(err)
+    Best.findByIdAndUpdate(req.params.id, {$push: {'user': req.body.user}}, function(err, user){
+        console.log(req.params.id+" is favorited by "+req.body.user);
+        if (err)
           res.send(err);
-          res.json({message: 'updated!'});
         });
-    });
+    // Best.findById(req.params.id, function(err, best){
+    //   if (err){
+    //     res.send(err);
+    //   }
+    //   if (req.body.user) {
+    //     Best.user.push(req.body.user)
+    //   }
+    //     // add all attributes to be updated
+    //     best.save(function(err){
+    //       if(err)
+    //       res.send(err);
+    //       res.json({message: 'updated!'});
+    //     });
+    // });
   });
 
   app.delete('/api/bests/:id', function(req, res){
