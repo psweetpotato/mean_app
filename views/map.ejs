@@ -72,7 +72,7 @@
       <h1>Take a friend's suggestion</h1>
         <div id="suglist">
           <ul id="suggestionsUL">
-            <li class="sugli" ng-repeat='suggestion in suggestions | limitTo:5 | unique: "name"'
+            <li class="sugli" ng-repeat='suggestion in suggestions | limitTo:3 | unique: "name"'
             ng-click="addSug()">
               <span id='{{suggestion.name}}'>{{suggestion.name}}</span></br>
               <span id='{{suggestion.address}}'>{{suggestion.address}}</span>
