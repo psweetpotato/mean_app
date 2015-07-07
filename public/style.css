@@ -25,14 +25,22 @@ body{
   -webkit-box-shadow: 0 1px 0 rgba(0, 0, 0, 0.1) !important;
 }
 .overlay{
-  position: fixed;
+  /*position: fixed;
   top: 0;
   right: 0;
   width: 425px;
   height: 100%;
   z-index: 10;
   background-color: #f6f6f6;
-  margin-top: 68px;
+  margin-top: 68px;*/
+  background-color: #f6f6f6;
+  width: 500px;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin: 15px;
+  float: right;
+  border-radius: 10px;
+  z-index: 0;
 }
 
 .navOptions {
@@ -226,5 +234,3 @@ h1 {
 #friendsUL li:hover {
   background: #949291;
 }
-
-
