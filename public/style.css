@@ -29,9 +29,9 @@ body{
   top: 0;
   right: 0;
   width: 425px;
-  height: 100%;
-  z-index: 10;
-  background-color: #f6f6f6;
+  height: 100%;*/
+  /*z-index: 10;*/
+  /*background-color: #f6f6f6;
   margin-top: 68px;*/
   background-color: #f6f6f6;
   width: 500px;
@@ -40,7 +40,6 @@ body{
   margin: 15px;
   float: right;
   border-radius: 10px;
-  z-index: 0;
 }
 
 .navOptions {
