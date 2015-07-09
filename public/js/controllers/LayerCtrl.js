@@ -238,7 +238,6 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
           var friendId = $scope.tempFriends[x];
           for (var i = 0; i < req.length; i++) {
             if ($.inArray(friendId, req[i].user) != -1) {
-              console.log(friendId);
               var venue = req[i].name;
               var latlng = L.latLng(req[i].lat, req[i].lon);
               var address = req[i].address;
