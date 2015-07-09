@@ -108,7 +108,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
               address = req[i].address,
               marker = L.marker(latlng, {
               icon: L.mapbox.marker.icon({
-                'marker-color': '#F9AC6D',
+                'marker-color': '#419595',
                 'marker-symbol': 'restaurant',
                 'marker-size': 'medium'
               })
@@ -200,6 +200,7 @@ var controllersMod = angular.module('LayerCtrl', ['angular.filter'])
   navbar.on('click', '#friends', function(){
     categoryLayer.clearLayers(map);
     friendLayer.clearLayers(map);
+    myLayer.clearLayers(map);
     var userId = $('#userId').text();
     var url = '/api/users/' + userId;
     $scope.tempFriends = [];
@@ -282,5 +283,3 @@ $scope.filterFriendsBests = function (){
     });
   };
   }]);
-
-
